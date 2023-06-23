@@ -1,13 +1,15 @@
-import "./App.css";
-import RoutesCtrl from "./components/Controllers/RoutesCtrl";
-import Navbar from "./components/Navigation/Navbar";
-
+import RoutesCtrl from "@/components/Controllers/RoutesCtrl";
+import ProviderLayout from "@/components/Layouts/ProviderLayout";
+import Navbar from "@/components/Navigation/Navbar";
+import "@/styles/app.css";
 function App() {
   return (
-    <>
-      <RoutesCtrl />
-      <Navbar />
-    </>
+    <ProviderLayout>
+      <div className="app-container">
+        <Navbar />
+        <RoutesCtrl />
+      </div>
+    </ProviderLayout>
   );
 }
 

@@ -1,7 +1,7 @@
+import ChatsPage from "@/pages/ChatsPage";
+import HomePage from "@/pages/HomePage";
 import { ReactElement } from "react";
 import { Route, Routes } from "react-router-dom";
-import ChatsPage from "../../pages/ChatsPage";
-import HomePage from "../../pages/HomePage";
 const RoutesCtrl = (): ReactElement => {
   return (
     <Routes>

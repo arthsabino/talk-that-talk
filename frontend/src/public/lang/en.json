@@ -1,0 +1,12 @@
+{
+  "app_name": "Talk that Talk",
+  "navigation": ["Home", "Chats"],
+  "auth": {
+    "login": {
+      "title": "Login"
+    },
+    "register": {
+      "title": "Register"
+    }
+  }
+}
