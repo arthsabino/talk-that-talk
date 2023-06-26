@@ -7,7 +7,7 @@ const Button = ({
 }: {
   btnCls?: string;
   onClick?: () => void;
-  children: ReactElement;
+  children: ReactElement | string;
 }) => {
   return (
     <button className={`btn ${btnCls ?? ""}`} onClick={onClick}>

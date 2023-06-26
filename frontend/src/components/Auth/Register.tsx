@@ -3,11 +3,11 @@ import { ReactElement, useState } from "react";
 import Button from "../Button";
 import TextInput from "../FormElements/TextInput";
 
-const Login = (): ReactElement => {
+const Register = (): ReactElement => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const {
-    auth: { login, forms, btns },
+    auth: { register, forms },
   } = useLanguage();
   return (
     <form className="w-full">
@@ -30,11 +30,10 @@ const Login = (): ReactElement => {
             },
           }}
         />
-        <Button btnCls="btn--secondary">{login}</Button>
-        <Button btnCls="btn--primary">{btns[0]}</Button>
+        <Button btnCls="btn--secondary">{register}</Button>
       </div>
     </form>
   );
 };
 
-export default Login;
+export default Register;

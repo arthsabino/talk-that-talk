@@ -2,11 +2,9 @@
   "app_name": "Talk that Talk",
   "navigation": ["Home", "Chats"],
   "auth": {
-    "login": {
-      "title": "Login"
-    },
-    "register": {
-      "title": "Register"
-    }
+    "login": "Login",
+    "register": "Register",
+    "forms": ["Email or username", "Password"],
+    "btns": ["Use guest account"]
   }
 }

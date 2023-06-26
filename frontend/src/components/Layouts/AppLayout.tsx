@@ -1,7 +1,14 @@
-import { ReactElement } from "react";
+import { FC, ReactElement } from "react";
 
-const AppLayout = ({ children }: { children: ReactElement }) => {
-  return <div className="main-container content-container">{children}</div>;
+const AppLayout: FC<{ extraCls?: string; children: ReactElement }> = ({
+  extraCls,
+  children,
+}) => {
+  return (
+    <div className={`main-container content-container ${extraCls ?? ""}`}>
+      {children}
+    </div>
+  );
 };
 
 export default AppLayout;
