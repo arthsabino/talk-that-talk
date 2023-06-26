@@ -7,7 +7,14 @@
   --dark-variant-1: rgb(65, 53, 67);
   --nav-height: 4rem;
   --black-1: rgba(0, 0, 0, 0.5);
-  --primary-variant-1: #F1D4E5
+  --primary-variant-1: rgba(241, 212, 229, 1);
+  --white: rgba(255, 255, 255, 1);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 /* global */
 a {
@@ -22,12 +29,20 @@ a {
   align-items: center;
 }
 
+.items-start {
+  align-items: start !important;
+}
+
 .justify-center {
  justify-content: center; 
 }
 
 .flex-col {
   flex-direction: column;
+}
+
+.font-bold {
+  font-weight: bold;
 }
 
 .gap-4 {
@@ -100,8 +115,35 @@ nav {
   display: flex;
   align-items: center;
   padding: 1rem 2rem;
+}
+
+.card--auth-card {
   width: 100%;
 }
+
+.chat-list-container {
+  flex-direction: column;
+  width: 25%;
+  background-color: var(--secondary-variant-1);
+  padding-right: 0.75rem;
+  padding-left: 0.75rem;
+  color: var(--dark);
+  gap: 15px;
+}
+
+.chat-row {
+  cursor: pointer;
+  align-items: start;
+  flex-direction: column;
+  background-color: var(--primary-variant-1);
+  padding: 0.75rem;
+  width: 100%;
+}
+
+.chat-row:hover {
+  opacity: 0.75;
+}
+
 .auth-container {
   display: flex;
   width: 80%;
@@ -112,10 +154,42 @@ nav {
   margin-right: auto;
 }
 
+.chat-content-container {
+  width: 75%;
+  background-color: var(--secondary);
+  flex-direction: column;
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+}
+
+.chat-content-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+.chat-content {
+  align-items: start;
+  width: 100%;
+  background-color: var(--white);
+  height: 250px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  color: red;
+}
+
 
 /* backgrounds */
 .bg-primary {
   background-color: var(--primary);
+}
+.bg-primary-variant-1 {
+  background-color: var(--primary-variant-1);
 }
 .bg-secondary {
   background-color: var(--secondary);
@@ -135,7 +209,7 @@ nav {
 .btn {
   border:none;
   border-radius: 2rem;
-  padding: 1rem 2rem;
+  padding: 1rem;
   font-weight: bold;
   text-transform: capitalize;
   background-color: transparent;
@@ -166,7 +240,6 @@ nav {
   background-color: var(--secondary);
   color:white;
 }
-
 
 .auth-headers {
   display: flex;
@@ -217,6 +290,9 @@ nav {
   }
   .auth-container {
     width: 40%;
+  }
+  .btn {
+    padding: 1rem 2rem;
   }
 }
 /* Large devices (laptops/desktops, 992px and up) */

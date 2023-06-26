@@ -1,3 +1,5 @@
+import Card from "@/components/Card";
+import ChatRow from "@/components/Chats/ChatRow";
 import AppLayout from "@/components/Layouts/AppLayout";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -16,14 +18,26 @@ const ChatsPage = () => {
     fetchChats();
   }, []);
   return (
-    <AppLayout extraCls="gap-4">
+    <AppLayout extraCls="gap-4 items-start">
       <>
-        <div className="w-25 bg-secondary-variant-1">
-          {chats.map((chat) => {
-            return <div key={chat._id}>{chat.chatName}</div>;
-          })}
-        </div>
-        <div className="w-75 bg-secondary">awd</div>
+        <Card containerCls="chat-list-container">
+          <>
+            {chats.map((chat) => {
+              return <ChatRow name={chat.chatName} preview={chat.chatName} />;
+            })}
+          </>
+        </Card>
+        <Card containerCls="chat-content-container">
+          <>
+            <div className="chat-content-header">
+              <h2>awd</h2>
+              <span>awd</span>
+            </div>
+            <Card containerCls="chat-content">
+              <>awd</>
+            </Card>
+          </>
+        </Card>
       </>
     </AppLayout>
   );
