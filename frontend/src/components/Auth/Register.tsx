@@ -1,5 +1,5 @@
 import { useLanguage } from "@/hooks/context";
-import { ReactElement, useState } from "react";
+import { ChangeEvent, ReactElement, useState } from "react";
 import Button from "../Button";
 import TextInput from "../FormElements/TextInput";
 
@@ -9,6 +9,14 @@ const Register = (): ReactElement => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [pic, setPic] = useState<File>();
+
+  const handlePic = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || !e.target.files[0]){
+      return
+    } else {
+      setPic(e.target.files[0]);
+    }
+  };
   const {
     auth: { register, forms },
   } = useLanguage();
@@ -55,12 +63,8 @@ const Register = (): ReactElement => {
           <label>{forms[4]}</label>
           <input
             type="file"
-            onChange={(e) => {
-              if (!e.target.files || !e.target.files[0]) return;
-              else {
-                setPic(e.target.files[0]);
-              }
-            }}
+            accept="image/*"
+            onChange={(e) => handlePic(e)}
           />
         </div>
 
