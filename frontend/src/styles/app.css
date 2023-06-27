@@ -259,7 +259,7 @@ nav {
 .form-input label {
   font-weight: bold;
 }
-.form-input input {
+.form-input input[type=text] {
   border: 0;
   background-color: var(--dark-variant-1);
   border-radius: 2rem;

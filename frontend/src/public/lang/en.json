@@ -4,7 +4,13 @@
   "auth": {
     "login": "Login",
     "register": "Register",
-    "forms": ["Email or username", "Password"],
+    "forms": [
+      "Email",
+      "Password",
+      "Name",
+      "Confirm Password",
+      "Upload your Picture"
+    ],
     "btns": ["Use guest account"]
   }
 }

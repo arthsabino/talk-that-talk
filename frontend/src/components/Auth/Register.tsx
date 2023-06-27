@@ -4,8 +4,11 @@ import Button from "../Button";
 import TextInput from "../FormElements/TextInput";
 
 const Register = (): ReactElement => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [pic, setPic] = useState<File>();
   const {
     auth: { register, forms },
   } = useLanguage();
@@ -13,11 +16,20 @@ const Register = (): ReactElement => {
     <form className="w-full">
       <div className="auth-content">
         <TextInput
+          label={forms[2]}
+          input={{
+            value: name,
+            onChange: (e) => {
+              setName(e.target.value);
+            },
+          }}
+        />
+        <TextInput
           label={forms[0]}
           input={{
-            value: username,
+            value: email,
             onChange: (e) => {
-              setUsername(e.target.value);
+              setEmail(e.target.value);
             },
           }}
         />
@@ -30,6 +42,28 @@ const Register = (): ReactElement => {
             },
           }}
         />
+        <TextInput
+          label={forms[3]}
+          input={{
+            value: confirmPassword,
+            onChange: (e) => {
+              setConfirmPassword(e.target.value);
+            },
+          }}
+        />
+        <div className="form-input">
+          <label>{forms[4]}</label>
+          <input
+            type="file"
+            onChange={(e) => {
+              if (!e.target.files || !e.target.files[0]) return;
+              else {
+                setPic(e.target.files[0]);
+              }
+            }}
+          />
+        </div>
+
         <Button btnCls="btn--secondary">{register}</Button>
       </div>
     </form>
