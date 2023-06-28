@@ -1,19 +1,24 @@
-import { API_URL, CLOUDINARY_UPLOAD } from "@/Util/Consts";
 import { useLanguage } from "@/hooks/context";
-import axios from "axios";
+import { API_URL, CLOUDINARY_UPLOAD } from "@/util/Consts";
+import axios, { AxiosError } from "axios";
 import { ChangeEvent, FormEvent, ReactElement, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Button from "../Button";
 import Card from "../Card";
 import TextInput from "../FormElements/TextInput";
+import LoadingView from "../Utility/LoadingView";
 
 const Register = (): ReactElement => {
-  const { errors: errLang } = useLanguage();
+  const { messages } = useLanguage();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [pic, setPic] = useState<File>();
   const [errors, setErrors] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
+  const history = useNavigate();
 
   const handlePic = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || !e.target.files[0]) {
@@ -27,21 +32,21 @@ const Register = (): ReactElement => {
   };
   const checkErrors = () => {
     if (!email) {
-      addError(errLang.email_required);
+      addError(messages.email_required);
     }
     if (!name) {
-      addError(errLang.name_required);
+      addError(messages.name_required);
     }
     if (!password) {
-      addError(errLang.password_required);
+      addError(messages.password_required);
     }
     if (!pic) {
-      addError(errLang.pic_required);
+      addError(messages.pic_required);
     } else if (pic.type !== "image/jpeg" && pic.type !== "image/png") {
-      addError(errLang.pic_image_accepted);
+      addError(messages.pic_image_accepted);
     }
     if (password !== confirmPassword) {
-      addError(errLang.pw_not_match);
+      addError(messages.pw_not_match);
     }
 
     return (
@@ -55,13 +60,29 @@ const Register = (): ReactElement => {
   };
 
   const registerUser = async (picUrl: string) => {
-    const { data: userData } = await axios.post(API_URL.apiUser, {
-      name,
-      email,
-      password,
-      pic: picUrl,
-    });
-    console.log(userData);
+    const { data: userData } = await axios.post(
+      API_URL.register,
+      {
+        name,
+        email,
+        password,
+        pic: picUrl,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (userData) {
+      setLoading(false);
+      console.log(JSON.stringify(userData));
+      localStorage.removeItem("userInfo");
+      localStorage.setItem("userInfo", JSON.stringify(userData));
+      toast.success(messages.register_successful);
+      history("/chats");
+    }
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -69,21 +90,30 @@ const Register = (): ReactElement => {
     setErrors([]);
     if (checkErrors()) return;
     if (pic) {
-      const picData = new FormData();
-      picData.append("file", pic);
-      picData.append("upload_preset", "talk-that-talk");
-      picData.append("cloud_name", "talk-that-talk");
-      await axios
-        .post(CLOUDINARY_UPLOAD, picData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((res) => {
-          if (res && res.data && res.data.url) {
-            registerUser(res.data.url);
-          }
-        });
+      try {
+        setLoading(true);
+        const picData = new FormData();
+        picData.append("file", pic);
+        picData.append("upload_preset", "talk-that-talk");
+        picData.append("cloud_name", "talk-that-talk");
+        await axios
+          .post(CLOUDINARY_UPLOAD, picData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
+          .then((res) => {
+            if (res && res.data && res.data.url) {
+              registerUser(res.data.url);
+            }
+          });
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          toast.error(error?.response?.data?.message);
+        }
+      } finally {
+        setLoading(false)
+      }
     }
   };
   const {
@@ -92,6 +122,7 @@ const Register = (): ReactElement => {
   return (
     <form onSubmit={handleSubmit} className="w-full">
       <div className="auth-content">
+        {loading ? <LoadingView show={loading} /> : null}
         {errors && errors.length > 0 && (
           <Card containerCls="card--error-card">
             <ul>

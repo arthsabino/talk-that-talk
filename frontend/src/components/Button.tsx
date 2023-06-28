@@ -1,16 +1,13 @@
-import { ReactElement } from "react";
+import { FC, ReactElement } from "react";
 
-const Button = ({
-  btnCls,
-  onClick,
-  children,
-}: {
+const Button: FC<{
+  type?: "button" | "submit" | "reset" | undefined;
   btnCls?: string;
   onClick?: () => void;
   children: ReactElement | string;
-}) => {
+}> = ({ type = "button", btnCls, onClick, children }) => {
   return (
-    <button className={`btn ${btnCls ?? ""}`} onClick={onClick}>
+    <button type={type} className={`btn ${btnCls ?? ""}`} onClick={onClick}>
       {children}
     </button>
   );

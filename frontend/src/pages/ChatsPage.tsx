@@ -3,8 +3,8 @@ import ChatRow from "@/components/Chats/ChatRow";
 import AppLayout from "@/components/Layouts/AppLayout";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { API_URL } from "../Util/Consts";
 import { Chats } from "../models";
+import { API_URL } from "../util/Consts";
 const ChatsPage = () => {
   const [chats, setChats] = useState<Chats[]>([]);
   const fetchChats = async () => {
@@ -15,7 +15,7 @@ const ChatsPage = () => {
   };
 
   useEffect(() => {
-    fetchChats();
+    // fetchChats();
   }, []);
   return (
     <AppLayout extraCls="gap-4 items-start">

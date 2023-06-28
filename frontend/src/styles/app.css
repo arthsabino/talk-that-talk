@@ -70,6 +70,10 @@ ul {
   width: 100%;
 }
 
+.relative {
+  position: relative;
+}
+
 .app-container {
   min-height: 100vh;
   display: flex;
@@ -283,6 +287,67 @@ nav {
   outline: none;
 }
 
+.loader-container {
+  top:0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--dark);
+  color: var(--primary);
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  z-index: 9999;
+  opacity: 0.75;
+}
+
+.fixed-loader {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+}
+
+.inside-loader {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.loader-container > svg {
+  height: 40%;
+  max-height: 1.25rem;
+  max-width: 80%;
+  stroke: transparent;
+}
+
+.loader-container circle {
+  -webkit-transform-origin: center;
+  -ms-transform-origin: center;
+  transform-origin: center;
+  will-change: transform;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+}
+
+.loader-container circle:nth-child(1) {
+  -webkit-animation: circle-1-animation 0.6s infinite;
+  animation: circle-1-animation 0.6s infinite;
+}
+.loader-container circle:nth-child(2) {
+  -webkit-animation: circle-2-animation 0.6s infinite;
+  animation: circle-2-animation 0.6s infinite;
+}
+.loader-container circle:nth-child(3) {
+  -webkit-animation: circle-2-animation 0.6s infinite;
+  animation: circle-2-animation 0.6s infinite;
+}
+.loader-container circle:nth-child(4) {
+  -webkit-animation: circle-3-animation 0.6s infinite;
+  animation: circle-3-animation 0.6s infinite;
+}
+
 @media only screen and (max-width: 600px) {
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -317,5 +382,89 @@ nav {
 @media only screen and (min-width: 1200px) {
   .main-container {
     width: 1440px;
+  }
+}
+
+
+
+/* animations */
+@-webkit-keyframes circle-1-animation {
+  0% {
+    -webkit-transform: scale(0.4) translateX(28.57%);
+    -ms-transform: scale(0.4) translateX(28.57%);
+    transform: scale(0.4) translate(28.57%);
+    opacity: 0.3;
+  }
+  to {
+    -webkit-transform: scale(1) translateX(0%);
+    -ms-transform: scale(1) translateX(0%);
+    transform: scale(1) translate(0);
+    opacity: 1;
+  }
+}
+@keyframes circle-1-animation {
+  0% {
+    -webkit-transform: scale(0.4) translateX(28.57%);
+    -ms-transform: scale(0.4) translateX(28.57%);
+    transform: scale(0.4) translate(28.57%);
+    opacity: 0.3;
+  }
+  to {
+    -webkit-transform: scale(1) translateX(0%);
+    -ms-transform: scale(1) translateX(0%);
+    transform: scale(1) translate(0);
+    opacity: 1;
+  }
+}
+@-webkit-keyframes circle-2-animation {
+  0% {
+    -webkit-transform: translateX(0%);
+    -ms-transform: translateX(0%);
+    transform: translate(0);
+  }
+  to {
+    -webkit-transform: translateX(28.57%);
+    -ms-transform: translateX(28.57%);
+    transform: translate(28.57%);
+  }
+}
+@keyframes circle-2-animation {
+  0% {
+    -webkit-transform: translateX(0%);
+    -ms-transform: translateX(0%);
+    transform: translate(0);
+  }
+  to {
+    -webkit-transform: translateX(28.57%);
+    -ms-transform: translateX(28.57%);
+    transform: translate(28.57%);
+  }
+}
+@-webkit-keyframes circle-3-animation {
+  0% {
+    -webkit-transform: scale(1) translateX(0%);
+    -ms-transform: scale(1) translateX(0%);
+    transform: scale(1) translate(0);
+    opacity: 1;
+  }
+  to {
+    -webkit-transform: scale(0.4) translateX(-28.57%);
+    -ms-transform: scale(0.4) translateX(-28.57%);
+    transform: scale(0.4) translate(-28.57%);
+    opacity: 0.3;
+  }
+}
+@keyframes circle-3-animation {
+  0% {
+    -webkit-transform: scale(1) translateX(0%);
+    -ms-transform: scale(1) translateX(0%);
+    transform: scale(1) translate(0);
+    opacity: 1;
+  }
+  to {
+    -webkit-transform: scale(0.4) translateX(-28.57%);
+    -ms-transform: scale(0.4) translateX(-28.57%);
+    transform: scale(0.4) translate(-28.57%);
+    opacity: 0.3;
   }
 }

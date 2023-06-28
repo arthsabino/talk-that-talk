@@ -15,7 +15,7 @@ const AuthCard = () => {
           <h2>{appName}</h2>
         </div>
       </Card>
-      <Card containerCls="card--auth-card flex-col bg-white">
+      <Card containerCls="card--auth-card flex-col bg-white relative">
         <>
           <div className="auth-headers">
             <Button

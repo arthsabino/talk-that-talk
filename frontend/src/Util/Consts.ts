@@ -1,6 +1,7 @@
 export const API_URL = {
   getChats: "/api/chat",
-  apiUser: "/api/user",
+  register: "/api/user/register",
+  login: "/api/user/login",
 };
 
 export const CLOUDINARY_UPLOAD =
