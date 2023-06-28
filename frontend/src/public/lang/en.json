@@ -12,5 +12,14 @@
       "Upload your Picture"
     ],
     "btns": ["Use guest account"]
+  },
+  "errors": {
+    "pw_not_match": "Passwords do not match",
+    "email_already_taken": "Email already taken",
+    "email_required": "Email is required",
+    "name_required": "Name is required",
+    "password_required": "Password is required",
+    "pic_required": "Pic is required",
+    "pic_image_accepted": "Pic with only type .jpeg, .jpg, or .png are accepted"
   }
 }

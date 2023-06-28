@@ -9,6 +9,7 @@
   --black-1: rgba(0, 0, 0, 0.5);
   --primary-variant-1: rgba(241, 212, 229, 1);
   --white: rgba(255, 255, 255, 1);
+  --error: rgba(251, 91, 91, 1);
 }
 
 * {
@@ -19,6 +20,10 @@
 /* global */
 a {
   text-decoration: none;
+}
+
+ul {
+  list-style-position: inside;
 }
 
 .flex {
@@ -121,6 +126,11 @@ nav {
   width: 100%;
 }
 
+.card--error-card {
+  background-color: var(--error);
+  color: var(--white);
+}
+
 .chat-list-container {
   flex-direction: column;
   width: 25%;
@@ -205,6 +215,10 @@ nav {
   background-color: white;
 }
 
+.bg-error {
+  background-color: var(--error);
+}
+
 /* buttons */
 .btn {
   border:none;
@@ -259,7 +273,8 @@ nav {
 .form-input label {
   font-weight: bold;
 }
-.form-input input[type=text] {
+.form-input input[type=text],
+.form-input input[type=password] {
   border: 0;
   background-color: var(--dark-variant-1);
   border-radius: 2rem;
