@@ -91,6 +91,7 @@ nav {
   height: var(--nav-height);
   background-color: var(--primary);
   filter: drop-shadow(0px 0px 7px var(--primary));
+  z-index: 9999;
 }
 
 /* containers */
@@ -235,6 +236,9 @@ nav {
 
 .btn:hover {
   cursor: pointer;
+}
+
+.btn:not(.selected):hover {
   opacity: 0.75;
 }
 

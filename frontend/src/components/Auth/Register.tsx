@@ -112,7 +112,7 @@ const Register = (): ReactElement => {
           toast.error(error?.response?.data?.message);
         }
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     }
   };
@@ -175,7 +175,9 @@ const Register = (): ReactElement => {
           <input type="file" accept="image/*" onChange={(e) => handlePic(e)} />
         </div>
 
-        <Button btnCls="btn--secondary">{register}</Button>
+        <Button type="submit" btnCls="btn--secondary">
+          {register}
+        </Button>
       </div>
     </form>
   );

@@ -1,9 +1,10 @@
-import { FC, ReactElement } from "react";
+import { ChildrenElement } from "@/models";
+import { FC } from "react";
 
-const AppLayout: FC<{ extraCls?: string; children: ReactElement }> = ({
-  extraCls,
-  children,
-}) => {
+const AppLayout: FC<{
+  extraCls?: string;
+  children?: ChildrenElement;
+}> = ({ extraCls, children }) => {
   return (
     <div className={`main-container content-container ${extraCls ?? ""}`}>
       {children}

@@ -1,14 +1,23 @@
 import AuthCard from "@/components/Auth/AuthCard";
 import AppLayout from "@/components/Layouts/AppLayout";
-import { ReactElement } from "react";
+import { useUserInfo } from "@/hooks/user";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-const HomePage = (): ReactElement => {
+const HomePage = () => {
+  const history = useNavigate();
+  const { storeInfo } = useUserInfo();
+  useEffect(() => {
+    if (storeInfo) {
+      history("/chats");
+    }
+  }, [history, storeInfo]);
   return (
-    <AppLayout>
-      <>
+    Boolean(history) && (
+      <AppLayout>
         <AuthCard />
-      </>
-    </AppLayout>
+      </AppLayout>
+    )
   );
 };
 

@@ -1,10 +1,11 @@
-import { FC, ReactElement } from "react";
+import { ChildrenElement } from "@/models";
+import { FC } from "react";
 
 const Button: FC<{
   type?: "button" | "submit" | "reset" | undefined;
   btnCls?: string;
   onClick?: () => void;
-  children: ReactElement | string;
+  children?: ChildrenElement | string;
 }> = ({ type = "button", btnCls, onClick, children }) => {
   return (
     <button type={type} className={`btn ${btnCls ?? ""}`} onClick={onClick}>

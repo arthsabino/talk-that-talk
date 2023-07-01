@@ -1,6 +1,6 @@
 export const API_URL = {
-  getChats: "/api/chat",
-  register: "/api/user/register",
+  getChats: "/api/chats",
+  register: "/api/user",
   login: "/api/user/login",
 };
 

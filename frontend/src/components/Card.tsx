@@ -1,11 +1,11 @@
-import { ReactElement } from "react";
+import { ChildrenElement } from "@/models";
 
 const Card = ({
   containerCls,
   children,
 }: {
   containerCls?: string;
-  children: ReactElement;
+  children?: ChildrenElement;
 }) => {
   return <div className={`card ${containerCls ?? ""}`}>{children}</div>;
 };
