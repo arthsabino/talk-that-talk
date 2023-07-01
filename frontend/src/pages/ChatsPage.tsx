@@ -1,7 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Card from "@/components/Card";
 import ChatList from "@/components/Chats/ChatList";
+import Sidebar from "@/components/Chats/Sidebar";
 import AppLayout from "@/components/Layouts/AppLayout";
+import ChatNavbar from "@/components/Navigation/ChatNavbar";
 import { useUser } from "@/hooks/context";
 import { Chat } from "@/models";
 import { API_URL } from "@/util/Consts";
@@ -10,6 +12,7 @@ import { useEffect, useState } from "react";
 const ChatsPage = () => {
   const { val: user } = useUser();
   const [chats, setChats] = useState<Chat[]>([]);
+  const [showSidebar, setShowSidebar] = useState(false);
   useEffect(() => {
     const fetchChats = async () => {
       const data = await fetcher(API_URL.getChats, user.token);
@@ -22,6 +25,8 @@ const ChatsPage = () => {
   }, [user]);
   return (
     <AppLayout extraCls="gap-4 items-start">
+      <ChatNavbar setShow={setShowSidebar} />
+      {showSidebar && <Sidebar setShow={setShowSidebar} />}
       {user && <ChatList chats={chats} />}
       <Card containerCls="chat-content-container">
         <div className="chat-content-header">

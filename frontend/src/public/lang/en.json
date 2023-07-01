@@ -13,6 +13,10 @@
     ],
     "btns": ["Use guest account"]
   },
+  "chats": {
+    "search_user": "Search User",
+    "enter_here": "Enter here"
+  },
   "messages": {
     "pw_not_match": "Passwords do not match",
     "email_already_taken": "Email already taken",
