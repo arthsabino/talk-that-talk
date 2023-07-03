@@ -15,7 +15,8 @@
   },
   "chats": {
     "search_user": "Search User",
-    "enter_here": "Enter here"
+    "enter_here": "Enter here",
+    "user_dropdown": ["Profile", "Logout"]
   },
   "messages": {
     "pw_not_match": "Passwords do not match",

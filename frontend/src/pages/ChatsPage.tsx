@@ -26,7 +26,7 @@ const ChatsPage = () => {
   return (
     <AppLayout extraCls="gap-4 items-start">
       <ChatNavbar setShow={setShowSidebar} />
-      {showSidebar && <Sidebar setShow={setShowSidebar} />}
+      <Sidebar show={showSidebar} setShow={setShowSidebar} />
       {user && <ChatList chats={chats} />}
       <Card containerCls="chat-content-container">
         <div className="chat-content-header">
