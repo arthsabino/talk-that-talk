@@ -1,7 +1,9 @@
-import { useLanguage, useUser } from "@/hooks/context";
+import { useChat, useLanguage, useUser } from "@/hooks/context";
+import { useUserInfo } from "@/hooks/user";
 import { User } from "@/models";
 import { API_URL } from "@/util/Consts";
 import { fetcher } from "@/util/fetcher";
+import axios from "axios";
 import { Dispatch, FC, SetStateAction, useState } from "react";
 import { toast } from "react-toastify";
 import Button from "../Button";
@@ -11,13 +13,38 @@ import LoadingView from "../Utility/LoadingView";
 const Sidebar: FC<{
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
-}> = ({ show, setShow }) => {
+  setLoadChat: Dispatch<SetStateAction<boolean>>;
+}> = ({ show, setShow, setLoadChat }) => {
   const { val: user } = useUser();
   const { messages } = useLanguage();
   const { chats: chatStr } = useLanguage();
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
+  const { setVal } = useChat();
+  const { storeInfo } = useUserInfo();
+  const accessChat = async (userId: string) => {
+    try {
+      setLoadChat(true);
+      const { data } = await axios.post(
+        API_URL.getChats,
+        {
+          userId,
+        },
+        {
+          headers: {
+            Authorization:
+              storeInfo && storeInfo?._id ? "Bearer " + storeInfo.token : "",
+          },
+        }
+      );
+      setVal(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoadChat(false);
+    }
+  };
   const handleSearch = async () => {
     if (!search) {
       toast.error(messages.fill_out_fields);
@@ -66,7 +93,16 @@ const Sidebar: FC<{
         </Button>
         <div className="search-results">
           {users.map((u) => {
-            return <SearchResultItem key={u._id} user={u} />;
+            return (
+              <SearchResultItem
+                key={u._id}
+                user={u}
+                onClick={() => {
+                  accessChat(u._id);
+                  setShow(false);
+                }}
+              />
+            );
           })}
         </div>
       </div>
@@ -74,10 +110,12 @@ const Sidebar: FC<{
   );
 };
 
-const SearchResultItem: FC<{ user: User }> = ({ user }) => {
-  console.log(user);
+const SearchResultItem: FC<{ user: User; onClick: () => void }> = ({
+  user,
+  onClick,
+}) => {
   return (
-    <div className="search-result-item">
+    <div className="search-result-item" onClick={onClick}>
       <img src={user.picture} alt="avatar" />
       <div className="info">
         <span>{user.name}</span>

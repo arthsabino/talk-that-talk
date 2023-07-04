@@ -183,18 +183,20 @@ aside {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 1rem;
+  padding: 1rem 0;
+  width: 100%;
 }
 
 .search-result-item {
   cursor: pointer;
   background-color: var(--secondary);
   color: white;
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
   display: flex;
   align-items: center;
   border-radius: 1rem;
   word-wrap: break-word;
+  width: 100%;
 }
 
 .search-result-item:hover {
@@ -212,6 +214,10 @@ aside {
   display: flex;
   flex-direction: column;
   gap: 0.1rem;
+}
+
+.search-result-item > .info > span:nth-child(2) {
+  font-size: 0.75rem;
 }
 
 /* containers */
@@ -327,6 +333,7 @@ aside {
 .chat-navbar .header {
   flex-grow: 1;
   text-align: center;
+  font-size: 1.5rem;
 }
 
 .account-options {

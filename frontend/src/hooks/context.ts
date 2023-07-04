@@ -7,12 +7,17 @@ export function useLanguage() {
   return useContext(LanguageCtx);
 }
 
-const userCtxDefaultVal = {
+const ctxDefaultVal = {
   val: null as any,
   setVal: null as any,
 };
 
-export const UserCtx = createContext(userCtxDefaultVal);
+export const UserCtx = createContext(ctxDefaultVal);
+export const ChatCtx = createContext(ctxDefaultVal);
+
+export function useChat() {
+  return useContext(ChatCtx);
+}
 
 export function useUser() {
   return useContext(UserCtx);

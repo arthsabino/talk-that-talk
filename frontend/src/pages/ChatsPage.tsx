@@ -4,15 +4,22 @@ import ChatList from "@/components/Chats/ChatList";
 import Sidebar from "@/components/Chats/Sidebar";
 import AppLayout from "@/components/Layouts/AppLayout";
 import ChatNavbar from "@/components/Navigation/ChatNavbar";
-import { useUser } from "@/hooks/context";
+import LoadingView from "@/components/Utility/LoadingView";
+import { useChat, useUser } from "@/hooks/context";
 import { Chat } from "@/models";
 import { API_URL } from "@/util/Consts";
+import { getChatName } from "@/util/chat";
 import { fetcher } from "@/util/fetcher";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 const ChatsPage = () => {
   const { val: user } = useUser();
+  const { val: currentChat } = useChat();
   const [chats, setChats] = useState<Chat[]>([]);
   const [showSidebar, setShowSidebar] = useState(false);
+  const [loadChat, setLoadChat] = useState(false);
+  const chatName = useMemo(() => {
+    return getChatName(user._id, currentChat);
+  }, [currentChat]);
   useEffect(() => {
     const fetchChats = async () => {
       const data = await fetcher(API_URL.getChats, user.token);
@@ -26,11 +33,16 @@ const ChatsPage = () => {
   return (
     <AppLayout extraCls="gap-4 items-start">
       <ChatNavbar setShow={setShowSidebar} />
-      <Sidebar show={showSidebar} setShow={setShowSidebar} />
+      <Sidebar
+        show={showSidebar}
+        setShow={setShowSidebar}
+        setLoadChat={setLoadChat}
+      />
       {user && <ChatList chats={chats} />}
-      <Card containerCls="chat-content-container">
+      <Card containerCls="chat-content-container relative">
+        <LoadingView show={loadChat} />
         <div className="chat-content-header">
-          <h2>awd</h2>
+          <h2>{chatName}</h2>
           <span>awd</span>
         </div>
         <Card containerCls="chat-content">awd</Card>
