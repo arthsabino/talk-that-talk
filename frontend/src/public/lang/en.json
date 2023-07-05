@@ -16,6 +16,8 @@
   "chats": {
     "search_user": "Search User",
     "enter_here": "Enter here",
+    "my_chats": "My chats",
+    "add_group": "Add new group",
     "user_dropdown": ["Profile", "Logout"]
   },
   "messages": {

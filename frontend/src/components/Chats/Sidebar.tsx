@@ -115,7 +115,7 @@ const SearchResultItem: FC<{ user: User; onClick: () => void }> = ({
   onClick,
 }) => {
   return (
-    <div className="search-result-item" onClick={onClick}>
+    <div className="result-item search-list-item" onClick={onClick}>
       <img src={user.picture} alt="avatar" />
       <div className="info">
         <span>{user.name}</span>

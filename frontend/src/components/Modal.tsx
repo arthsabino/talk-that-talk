@@ -6,7 +6,8 @@ const Modal: FC<{
   setShow: Dispatch<SetStateAction<boolean>>;
   header: string;
   children?: ChildrenElement;
-}> = ({ show, setShow, header, children }) => {
+  bodyCls?: string;
+}> = ({ show, setShow, header, bodyCls, children }) => {
   const onClose = () => {
     setShow(false);
   };
@@ -22,7 +23,7 @@ const Modal: FC<{
             X
           </span>
         </div>
-        <div className="modal-body">{children}</div>
+        <div className={`modal-body ${bodyCls ?? ""}`}>{children}</div>
       </div>
     </div>
   );

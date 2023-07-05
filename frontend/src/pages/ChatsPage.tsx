@@ -18,7 +18,7 @@ const ChatsPage = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [loadChat, setLoadChat] = useState(false);
   const chatName = useMemo(() => {
-    return getChatName(user._id, currentChat);
+    if (user && currentChat) return getChatName(user._id, currentChat);
   }, [currentChat]);
   useEffect(() => {
     const fetchChats = async () => {
@@ -31,22 +31,26 @@ const ChatsPage = () => {
     }
   }, [user]);
   return (
-    <AppLayout extraCls="gap-4 items-start">
+    <AppLayout>
       <ChatNavbar setShow={setShowSidebar} />
       <Sidebar
         show={showSidebar}
         setShow={setShowSidebar}
         setLoadChat={setLoadChat}
       />
-      {user && <ChatList chats={chats} />}
-      <Card containerCls="chat-content-container relative">
-        <LoadingView show={loadChat} />
-        <div className="chat-content-header">
-          <h2>{chatName}</h2>
-          <span>awd</span>
-        </div>
-        <Card containerCls="chat-content">awd</Card>
-      </Card>
+      <div className="chats-page-container">
+        {user && <ChatList chats={chats} setLoadChat={setLoadChat} />}
+        {currentChat && (
+          <Card containerCls="chat-content-container relative">
+            <LoadingView show={loadChat} />
+            <div className="chat-content-header">
+              <h2>{chatName}</h2>
+              <span>awd</span>
+            </div>
+            <Card containerCls="chat-content">awd</Card>
+          </Card>
+        )}
+      </div>
     </AppLayout>
   );
 };
