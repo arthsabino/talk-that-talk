@@ -5,8 +5,7 @@ import Sidebar from "@/components/Chats/Sidebar";
 import AppLayout from "@/components/Layouts/AppLayout";
 import ChatNavbar from "@/components/Navigation/ChatNavbar";
 import LoadingView from "@/components/Utility/LoadingView";
-import { useChat, useUser } from "@/hooks/context";
-import { Chat } from "@/models";
+import { useChat, useChatList, useUser } from "@/hooks/context";
 import { API_URL } from "@/util/Consts";
 import { getChatName } from "@/util/chat";
 import { fetcher } from "@/util/fetcher";
@@ -14,7 +13,7 @@ import { useEffect, useMemo, useState } from "react";
 const ChatsPage = () => {
   const { val: user } = useUser();
   const { val: currentChat } = useChat();
-  const [chats, setChats] = useState<Chat[]>([]);
+  const { val: chats, setVal: setChats } = useChatList();
   const [showSidebar, setShowSidebar] = useState(false);
   const [loadChat, setLoadChat] = useState(false);
   const chatName = useMemo(() => {

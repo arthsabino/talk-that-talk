@@ -1,5 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ChatCtx, LanguageCtx, UserCtx, useMemoState } from "@/hooks/context";
+import {
+  ChatCtx,
+  ChatListCtx,
+  LanguageCtx,
+  UserCtx,
+  useMemoState,
+} from "@/hooks/context";
 import { useUserInfo } from "@/hooks/user";
 import { Chat, ChildrenElement, User } from "@/models";
 import english from "@/public/lang/en.json";
@@ -10,6 +16,7 @@ const ProviderLayout = ({ children }: { children?: ChildrenElement }) => {
   const [strings, setStrings] = useState(english);
   const userCtx = useMemoState<User | null | {}>(null);
   const chatCtx = useMemoState<Chat | null | {}>(null);
+  const chatListCtx = useMemoState<Chat[]>([]);
   const history = useNavigate();
   const { storeInfo } = useUserInfo();
   useEffect(() => {
@@ -24,7 +31,11 @@ const ProviderLayout = ({ children }: { children?: ChildrenElement }) => {
   return (
     <UserCtx.Provider value={userCtx}>
       <ChatCtx.Provider value={chatCtx}>
-        <LanguageCtx.Provider value={strings}>{children}</LanguageCtx.Provider>
+        <ChatListCtx.Provider value={chatListCtx}>
+          <LanguageCtx.Provider value={strings}>
+            {children}
+          </LanguageCtx.Provider>
+        </ChatListCtx.Provider>
       </ChatCtx.Provider>
     </UserCtx.Provider>
   );

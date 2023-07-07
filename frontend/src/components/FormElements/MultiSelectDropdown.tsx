@@ -1,18 +1,16 @@
 import { FC } from "react";
-import { TextInputProps } from "./props";
+import { DropdownProps } from "./props";
 
-const TextInput: FC<TextInputProps> = ({
-  input,
-  label,
+const MultiSelectDropdown: FC<DropdownProps> = ({
+  options,
   containerCls,
-  inputCls,
+  label,
 }) => {
   return (
     <div className={`form-input ${containerCls ?? ""}`}>
       {label ? <label className="">{label}</label> : null}
-      <input type="text" {...input} className={inputCls} />
     </div>
   );
 };
 
-export default TextInput;
+export default MultiSelectDropdown;

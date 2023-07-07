@@ -14,9 +14,14 @@ const ctxDefaultVal = {
 
 export const UserCtx = createContext(ctxDefaultVal);
 export const ChatCtx = createContext(ctxDefaultVal);
+export const ChatListCtx = createContext(ctxDefaultVal);
 
 export function useChat() {
   return useContext(ChatCtx);
+}
+
+export function useChatList() {
+  return useContext(ChatListCtx);
 }
 
 export function useUser() {
