@@ -622,13 +622,26 @@ aside {
   font-weight: bold;
 }
 .form-input input[type=text],
-.form-input input[type=password] {
+.form-input input[type=password]{
   border: 0;
   background-color: var(--dark-variant-1);
   border-radius: 2rem;
   padding: 0.75rem 1rem;
   color: white;
   outline: none;
+}
+
+.select-input {
+  width: 100%;
+}
+
+.form-dropdown {
+  position: absolute;
+  top: 2.5rem;
+  width: 100%;
+  min-height: 250px;
+  background-color: var(--dark-variant-1);
+  border-radius: 1rem;
 }
 
 .loader-container {

@@ -5,6 +5,7 @@ import { getChatName } from "@/util/chat";
 import { Dispatch, FC, SetStateAction, useState } from "react";
 import Button from "../Button";
 import Card from "../Card";
+import MultiSelectDropdown from "../FormElements/MultiSelectDropdown";
 import TextInput from "../FormElements/TextInput";
 import Modal from "../Modal";
 
@@ -53,6 +54,7 @@ const NewGroupModal: FC<{
   setShow: Dispatch<SetStateAction<boolean>>;
 }> = ({ show, setShow }) => {
   const { storeInfo } = useUserInfo();
+  const [names, setNames] = useState<string[]>([]);
   return (
     <Modal
       show={show}
@@ -64,7 +66,10 @@ const NewGroupModal: FC<{
         input={{ placeholder: "Enter name here" }}
         containerCls="w-full"
       />
-      <TextInput input={{ placeholder: "Members" }} containerCls="w-full" />
+      <MultiSelectDropdown
+        options={["1", "2"]}
+        onSelect={(n: string[]) => setNames(n)}
+      />
     </Modal>
   );
 };

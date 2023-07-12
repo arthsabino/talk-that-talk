@@ -21,4 +21,9 @@ export type TextInputProps = {
 
 export type DropdownProps = Omit<TextInputProps, "input"> & {
   options: string[];
+  onSelect: (n: string) => void;
+};
+
+export type MultiSelectDropdownProps = Omit<DropdownProps, "onSelect"> & {
+  onSelect: (n: string[]) => void;
 };
