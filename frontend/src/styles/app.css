@@ -644,6 +644,26 @@ aside {
   border-radius: 1rem;
 }
 
+.added-name-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  width: 100%;
+}
+
+.added-name-item {
+  padding: 0.5rem 1rem;
+  background-color: var(--primary);
+  border-radius: 1rem;
+  display: flex;
+  font-weight: 600;
+  font-size: 0.75rem;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
 .loader-container {
   top:0;
   left: 0;

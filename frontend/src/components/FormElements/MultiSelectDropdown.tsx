@@ -13,17 +13,18 @@ const MultiSelectDropdown: FC<MultiSelectDropdownProps> = ({
   const selectOption = (op: string) => {
     const i = selected.findIndex((x) => x === op);
     if (i > 0) {
-      setSelected((prev) => prev.filter((x) => x === op));
+      setSelected((prev) => prev.filter((x) => x !== op));
     } else {
       setSelected(Array.from(new Set([...selected, op])));
     }
+    setShowDropdown(false);
   };
   useEffect(() => {
     if (onSelect && selected) {
-      console.log(selected);
       onSelect(selected);
     }
   }, [onSelect, selected]);
+
   return (
     <div className={`form-input select-input relative ${containerCls ?? ""}`}>
       {label ? <label className="">{label}</label> : null}

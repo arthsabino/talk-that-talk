@@ -54,7 +54,7 @@ const NewGroupModal: FC<{
   setShow: Dispatch<SetStateAction<boolean>>;
 }> = ({ show, setShow }) => {
   const { storeInfo } = useUserInfo();
-  const [names, setNames] = useState<string[]>([]);
+  const [names, setNames] = useState<string[]>(["Arth", "Joseph"]);
   return (
     <Modal
       show={show}
@@ -68,9 +68,25 @@ const NewGroupModal: FC<{
       />
       <MultiSelectDropdown
         options={["1", "2"]}
-        onSelect={(n: string[]) => setNames(n)}
+        onSelect={(n: string[]) => {
+          setNames(n);
+        }}
       />
+      <div className="added-name-container">
+        {names.map((n) => {
+          return <AddedNameItem key={n} name={n} />;
+        })}
+      </div>
     </Modal>
+  );
+};
+
+const AddedNameItem: FC<{ name: string }> = ({ name }) => {
+  return (
+    <div className="added-name-item">
+      {name}
+      <span className="cross">X</span>
+    </div>
   );
 };
 
