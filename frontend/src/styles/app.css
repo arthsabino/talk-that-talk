@@ -642,6 +642,17 @@ aside {
   min-height: 250px;
   background-color: var(--dark-variant-1);
   border-radius: 1rem;
+  padding: 0.75rem 0;
+}
+
+.form-dropdown > li {
+  list-style: none;
+  padding: 0.25rem 1rem;
+  cursor: pointer;
+}
+
+.form-dropdown > li:hover {
+  background-color: var(--primary);
 }
 
 .added-name-container {
@@ -649,6 +660,18 @@ aside {
   flex-wrap: wrap;
   gap: 5px;
   width: 100%;
+  background-color: var(--secondary);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  color: var(--white);
+}
+
+.added-name-container > .no-user-selected {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
 }
 
 .added-name-item {
@@ -662,6 +685,10 @@ aside {
   align-items: center;
   justify-content: center;
   gap: 1rem;
+}
+
+.added-name-item > .cross:hover {
+  color: var(--secondary);
 }
 
 .loader-container {
@@ -690,6 +717,10 @@ aside {
   position: absolute;
   height: 100%;
   width: 100%;
+}
+
+.Toastify {
+  z-index: 999999;
 }
 
 .loader-container > svg {

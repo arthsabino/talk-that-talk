@@ -18,7 +18,9 @@
     "enter_here": "Enter here",
     "my_chats": "My chats",
     "add_group": "Add new group",
-    "user_dropdown": ["Profile", "Logout"]
+    "user_dropdown": ["Profile", "Logout"],
+    "no_user_selected": "No users selected",
+    "create_new_gc": "Create new group chat"
   },
   "messages": {
     "pw_not_match": "Passwords do not match",
@@ -32,5 +34,6 @@
     "login_successful": "Login successfully!",
     "welcome": "Welcome!",
     "fill_out_fields": "Please fill out all the fields"
-  }
+  },
+  "placeholders": ["Select names here", "Enter name here"]
 }

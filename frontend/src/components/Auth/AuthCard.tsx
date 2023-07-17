@@ -24,7 +24,7 @@ const AuthCard = () => {
               }}
               btnCls={`btn--auth ${!tab || tab === "login" ? "selected" : ""}`}
             >
-              <>login</>
+              login
             </Button>
             <Button
               onClick={() => {
@@ -32,7 +32,7 @@ const AuthCard = () => {
               }}
               btnCls={`btn--auth ${tab === "register" ? "selected" : ""}`}
             >
-              <>register</>
+              register
             </Button>
           </div>
           {!tab || tab === "login" ? (

@@ -13,7 +13,7 @@ import { useEffect, useMemo, useState } from "react";
 const ChatsPage = () => {
   const { val: user } = useUser();
   const { val: currentChat } = useChat();
-  const { val: chats, setVal: setChats } = useChatList();
+  const { setVal: setChats } = useChatList();
   const [showSidebar, setShowSidebar] = useState(false);
   const [loadChat, setLoadChat] = useState(false);
   const chatName = useMemo(() => {
@@ -38,7 +38,7 @@ const ChatsPage = () => {
         setLoadChat={setLoadChat}
       />
       <div className="chats-page-container">
-        {user && <ChatList chats={chats} setLoadChat={setLoadChat} />}
+        {user && <ChatList />}
         {currentChat && (
           <Card containerCls="chat-content-container relative">
             <LoadingView show={loadChat} />
