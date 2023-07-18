@@ -21,14 +21,16 @@ export type TextInputProps = {
   containerCls?: string;
 };
 
+export type OptionProps = { id: string; text: string };
+
 export type DropdownProps = Omit<TextInputProps, "input"> & {
-  options: string[];
+  options: OptionProps[];
   onSelect: (n: string) => void;
 };
 
 export type MultiSelectDropdownProps = Omit<DropdownProps, "onSelect"> & {
   input?: InputProps;
-  onSelect: (n: string[]) => void;
-  selected: string[];
-  setSelected: Dispatch<SetStateAction<string[]>>;
+  onSelect: (n: OptionProps[]) => void;
+  selected: OptionProps[];
+  setSelected: Dispatch<SetStateAction<OptionProps[]>>;
 };

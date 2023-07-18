@@ -1,10 +1,9 @@
 import { useLanguage } from "@/hooks/context";
-import { useUserInfo } from "@/hooks/user";
 import svgs from "@/util/Images";
 import { Dispatch, FC, SetStateAction, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../Button";
-import Modal from "../Modal";
+import { ProfileModal } from "../Modals/ProfileModal";
 
 const ChatNavbar: FC<{ setShow: Dispatch<SetStateAction<boolean>> }> = ({
   setShow,
@@ -59,27 +58,6 @@ const ChatNavbar: FC<{ setShow: Dispatch<SetStateAction<boolean>> }> = ({
       </div>
       <ProfileModal show={showModal} setShow={setShowModal} />
     </nav>
-  );
-};
-
-const ProfileModal: FC<{
-  show: boolean;
-  setShow: Dispatch<SetStateAction<boolean>>;
-}> = ({ show, setShow }) => {
-  const { storeInfo } = useUserInfo();
-  return (
-    <Modal
-      show={show}
-      setShow={setShow}
-      header={storeInfo && storeInfo.name ? storeInfo?.name : ""}
-    >
-      <img
-        src={storeInfo?.picture ? storeInfo?.picture : ""}
-        alt="avatar"
-        className="avatar"
-      />
-      <span className="email-address">{storeInfo?.email}</span>
-    </Modal>
   );
 };
 

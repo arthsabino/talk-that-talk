@@ -3,6 +3,7 @@ export const API_URL = {
   register: "/api/user",
   login: "/api/user/login",
   searchUser: "/api/user",
+  groupChat: "/api/chats/group",
 };
 
 export const CLOUDINARY_UPLOAD =

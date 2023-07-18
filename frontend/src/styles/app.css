@@ -492,7 +492,8 @@ aside {
   height: 100px;
 }
 
-.email-address {
+.email-address,
+.user-name {
   color: var(--dark);
   margin-top: 1rem;
 }

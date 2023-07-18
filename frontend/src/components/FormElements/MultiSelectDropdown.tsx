@@ -1,6 +1,6 @@
 import { useDropdownVisibility } from "@/hooks/event";
-import { FC, useEffect } from "react";
-import { MultiSelectDropdownProps } from "./props";
+import { FC, useEffect, useMemo } from "react";
+import { MultiSelectDropdownProps, OptionProps } from "./props";
 
 const MultiSelectDropdown: FC<MultiSelectDropdownProps> = ({
   input,
@@ -11,12 +11,12 @@ const MultiSelectDropdown: FC<MultiSelectDropdownProps> = ({
   selected,
   setSelected,
 }) => {
-  
   const { wrapperRef, isOpen, setIsOpen } = useDropdownVisibility();
-  const selectOption = (op: string) => {
-    const i = selected.findIndex((x) => x === op);
+  const isAllowed = useMemo(() => options && options.length > 0, [options]);
+  const selectOption = (op: OptionProps) => {
+    const i = selected.findIndex((x) => x.id === op.id);
     if (i >= 0) {
-      setSelected((prev) => prev.filter((x) => x !== op));
+      setSelected((prev) => prev.filter((x) => x.id !== op.id));
     } else {
       setSelected(Array.from(new Set([...selected, op])));
     }
@@ -35,7 +35,7 @@ const MultiSelectDropdown: FC<MultiSelectDropdownProps> = ({
     >
       {label ? <label className="">{label}</label> : null}
       <input {...input} type="text" onFocus={() => setIsOpen(true)} />
-      {isOpen && (
+      {isOpen && isAllowed && (
         <ul className="form-dropdown">
           {options.map((op, index) => {
             return (
@@ -45,7 +45,7 @@ const MultiSelectDropdown: FC<MultiSelectDropdownProps> = ({
                   selectOption(op);
                 }}
               >
-                {op}
+                {op.text}
               </li>
             );
           })}
