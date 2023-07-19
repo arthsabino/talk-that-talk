@@ -8,7 +8,14 @@ function App() {
     <ProviderLayout>
       <div className="app-container">
         <RoutesCtrl />
-        <ToastContainer position="top-center" limit={3} />
+        <ToastContainer
+          position="top-center"
+          limit={3}
+          toastStyle={{
+            backgroundColor: "var(--secondary)",
+            color: "var(--white)",
+          }}
+        />
       </div>
     </ProviderLayout>
   );

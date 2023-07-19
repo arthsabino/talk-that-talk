@@ -1,4 +1,5 @@
 import { useLanguage } from "@/hooks/context";
+import { useUserInfo } from "@/hooks/user";
 import svgs from "@/util/Images";
 import { Dispatch, FC, SetStateAction, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +13,7 @@ const ChatNavbar: FC<{ setShow: Dispatch<SetStateAction<boolean>> }> = ({
     app_name,
     chats: { user_dropdown },
   } = useLanguage();
+  const { storeInfo } = useUserInfo();
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const history = useNavigate();
@@ -36,7 +38,10 @@ const ChatNavbar: FC<{ setShow: Dispatch<SetStateAction<boolean>> }> = ({
         <div className="account-options">
           <span>{svgs.notification}</span>
           <div className="relative">
-            <span onClick={() => setShowUserDropdown((prev) => !prev)}>
+            <span
+              onClick={() => setShowUserDropdown((prev) => !prev)}
+              className={`${showUserDropdown ? "active" : ""}`}
+            >
               {svgs.user}
             </span>
             {showUserDropdown && (
@@ -56,7 +61,13 @@ const ChatNavbar: FC<{ setShow: Dispatch<SetStateAction<boolean>> }> = ({
           </div>
         </div>
       </div>
-      <ProfileModal show={showModal} setShow={setShowModal} />
+      <ProfileModal
+        show={showModal}
+        setShow={setShowModal}
+        name={storeInfo && storeInfo.name ? storeInfo?.name : ""}
+        imgSrc={storeInfo?.picture ? storeInfo?.picture : ""}
+        email={storeInfo?.email ? storeInfo?.email : ""}
+      />
     </nav>
   );
 };

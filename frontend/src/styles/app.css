@@ -287,7 +287,7 @@ aside {
   display: flex;
   width: 100%;
   gap: 1rem;
-  flex-direction: column;
+  flex-direction: column-reverse;
 }
 
 .chat-list-container {
@@ -298,14 +298,21 @@ aside {
   padding-left: 0;
   padding-top: 0;
   color: var(--dark);
+  display: none;
+}
+
+.chat-list-container.active {
+  display: block;
 }
 
 .chat-list-header {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   padding: 1rem 0.75rem;
+  gap: 0.75rem;
   color: white;
   border-top-right-radius: 0.5rem;
   border-top-left-radius: 0.5rem;
@@ -349,6 +356,11 @@ aside {
   padding-left: 0;
   padding-right: 0;
   padding-bottom: 0;
+  display: none;
+}
+
+.chat-content-container.active {
+  display: block;
 }
 
 .chat-content-header {
@@ -371,6 +383,38 @@ aside {
   color: red;
 }
 
+.no-chat-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 250px;
+  height: 100%;
+}
+
+.arrow,
+.eye {
+  cursor: pointer;
+  height: 1rem;
+}
+
+.eye:hover{
+  color: var(--primary);
+}
+
+.no-chat-content > .arrow {
+  position: absolute;
+  top: 1rem;
+  left: 10px;
+}
+.no-chat-content > .arrow:hover {
+  color: var(--primary)
+}
+
+
+
+.chat-content-header .arrow {
+ display: block
+}
 
 /* chat navbar */
 .nav-container.chat-container {
@@ -396,7 +440,8 @@ aside {
   color: white;
 }
 
-.account-options span:has(svg):hover {
+.account-options span:has(svg):hover,
+.account-options span:has(svg).active {
   color: var(--primary);
 }
 
@@ -788,13 +833,22 @@ aside {
   }
   .chat-list-container {
     width: 25%;
+    display: block;
   }
   .chat-content-container {
     width: 75%;
+    display: block;
+  }
+  .no-chat-content > .arrow,
+  .chat-content-header .arrow {
+    display: none;
   }
 }
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
+  .chat-list-header {
+    flex-direction: row;
+  }
 }
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {

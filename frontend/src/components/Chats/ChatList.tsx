@@ -9,11 +9,13 @@ const ChatList: FC = () => {
   const { val: chats } = useChatList();
   const { val: user } = useUser();
   const { chats: chatStr } = useLanguage();
-  const { val: chat } = useChat();
+  const { val: chat, setVal: setChat } = useChat();
   const [show, setShow] = useState(false);
   return (
     <>
-      <Card containerCls={`chat-list-container ${!chat ? "w-full" : ""}`}>
+      <Card
+        containerCls={`chat-list-container ${!chat ? "w-full active" : ""}`}
+      >
         <div className="chat-list-header">
           <h2>{chatStr.my_chats}</h2>
           <Button
@@ -29,7 +31,11 @@ const ChatList: FC = () => {
           {chats &&
             chats.map((chat: any) => {
               return (
-                <div key={chat._id} className="result-item chat-list-item">
+                <div
+                  key={chat._id}
+                  className="result-item chat-list-item"
+                  onClick={() => setChat(chat)}
+                >
                   <div className="info">
                     <span>{getChatName(user._id, chat)}</span>
                   </div>

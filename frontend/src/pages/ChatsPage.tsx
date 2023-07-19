@@ -1,28 +1,35 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Card from "@/components/Card";
+import ChatBox from "@/components/Chats/ChatBox";
 import ChatList from "@/components/Chats/ChatList";
 import Sidebar from "@/components/Chats/Sidebar";
 import AppLayout from "@/components/Layouts/AppLayout";
 import ChatNavbar from "@/components/Navigation/ChatNavbar";
 import LoadingView from "@/components/Utility/LoadingView";
-import { useChat, useChatList, useUser } from "@/hooks/context";
+import { useChatList, useUser } from "@/hooks/context";
 import { API_URL } from "@/util/Consts";
-import { getChatName } from "@/util/chat";
 import { fetcher } from "@/util/fetcher";
-import { useEffect, useMemo, useState } from "react";
+import { AxiosError } from "axios";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 const ChatsPage = () => {
   const { val: user } = useUser();
-  const { val: currentChat } = useChat();
   const { setVal: setChats } = useChatList();
   const [showSidebar, setShowSidebar] = useState(false);
   const [loadChat, setLoadChat] = useState(false);
-  const chatName = useMemo(() => {
-    if (user && currentChat) return getChatName(user._id, currentChat);
-  }, [currentChat]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchChats = async () => {
-      const data = await fetcher(API_URL.getChats, user.token);
-      setChats(data);
+      setLoading(true);
+      try {
+        const data = await fetcher(API_URL.getChats, user.token);
+        setChats(data);
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          toast.error(error?.response?.data?.message);
+        }
+      } finally {
+        setLoading(false);
+      }
     };
 
     if (user) {
@@ -31,6 +38,7 @@ const ChatsPage = () => {
   }, [user]);
   return (
     <AppLayout>
+      <LoadingView show={loading} />
       <ChatNavbar setShow={setShowSidebar} />
       <Sidebar
         show={showSidebar}
@@ -38,16 +46,11 @@ const ChatsPage = () => {
         setLoadChat={setLoadChat}
       />
       <div className="chats-page-container">
-        {user && <ChatList />}
-        {currentChat && (
-          <Card containerCls="chat-content-container relative">
-            <LoadingView show={loadChat} />
-            <div className="chat-content-header">
-              <h2>{chatName}</h2>
-              <span>awd</span>
-            </div>
-            <Card containerCls="chat-content">awd</Card>
-          </Card>
+        {user && (
+          <>
+            <ChatList />
+            <ChatBox loadChat={loadChat} />
+          </>
         )}
       </div>
     </AppLayout>
