@@ -511,8 +511,6 @@ aside {
   color: var(--primary);
 }
 
-
-
 .modal-content {
   position: relative;
   background-color: white;
@@ -521,6 +519,10 @@ aside {
   max-width: 21rem;
   border-radius: 1rem;
   padding: 1rem 2rem
+}
+
+.modal-content.lg {
+  max-width: 42rem;
 }
 
 .modal-body {
@@ -607,6 +609,12 @@ aside {
   color:white;
 }
 
+.btn--error {
+  border-radius: 0.75rem;
+  background-color: var(--error);
+  color:white;
+}
+
 .btn--cross {
   position: absolute;
   top: 0;
@@ -677,6 +685,10 @@ aside {
   outline: none;
 }
 
+.form-input input.square {
+  border-radius: 0.5rem;
+}
+
 .select-input {
   width: 100%;
 }
@@ -735,6 +747,13 @@ aside {
 
 .added-name-item > .cross:hover {
   color: var(--secondary);
+}
+
+.update-chat-name-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .loader-container {

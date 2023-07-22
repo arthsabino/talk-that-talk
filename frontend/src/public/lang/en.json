@@ -23,6 +23,7 @@
     "create_new_gc": "Create new group chat",
     "select_chat": "Select chat from list"
   },
+  "actions": ["Create", "Update", "Add", "Leave Group"],
   "messages": {
     "pw_not_match": "Passwords do not match",
     "email_already_taken": "Email already taken",
@@ -34,7 +35,13 @@
     "register_successful": "User registered successfully!",
     "login_successful": "Login successfully!",
     "welcome": "Welcome!",
-    "fill_out_fields": "Please fill out all the fields"
+    "fill_out_fields": "Please fill out all the fields",
+    "chat_name_updated": "Chat name updated",
+    "user_in_group": "User already in group",
+    "only_admins_add": "Only admins can add to this group",
+    "only_admins_remove": "Only admins can remove from this group",
+    "user_added": "User added",
+    "user_removed": "User removed"
   },
-  "placeholders": ["Select names here", "Enter name here"]
+  "placeholders": ["Search names here", "Enter name here"]
 }

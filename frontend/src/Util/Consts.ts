@@ -4,6 +4,9 @@ export const API_URL = {
   login: "/api/user/login",
   searchUser: "/api/user",
   groupChat: "/api/chats/group",
+  renameGroupChat: "/api/chats/rename",
+  addUser: "/api/chats/groupadd",
+  removeUser: "/api/chats/groupremove",
 };
 
 export const CLOUDINARY_UPLOAD =

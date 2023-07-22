@@ -2,6 +2,7 @@ import { useChatList, useLanguage, useUser } from "@/hooks/context";
 import { useUserInfo } from "@/hooks/user";
 import { User } from "@/models";
 import { API_URL } from "@/util/Consts";
+import debounce from "@/util/debounce";
 import { fetcher } from "@/util/fetcher";
 import axios, { AxiosError } from "axios";
 import { Dispatch, FC, FormEvent, SetStateAction, useState } from "react";
@@ -18,7 +19,12 @@ export const NewGroupModal: FC<{
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
 }> = ({ show, setShow }) => {
-  const { chats: chatStr, messages, placeholders } = useLanguage();
+  const {
+    chats: chatStr,
+    messages,
+    placeholders,
+    actions: actStr,
+  } = useLanguage();
   const { val: user } = useUser();
   const { setVal: setChats } = useChatList();
   const [chatName, setChatName] = useState("");
@@ -27,6 +33,15 @@ export const NewGroupModal: FC<{
   const [loading, setLoading] = useState(false);
 
   const { storeInfo } = useUserInfo();
+
+  const handleSelect = (op: OptionProps) => {
+    const i = selected.findIndex((x) => x.id === op.id);
+    if (i >= 0) {
+      setSelected((prev) => prev.filter((x) => x.id !== op.id));
+    } else {
+      setSelected(Array.from(new Set([...selected, op])));
+    }
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -62,16 +77,6 @@ export const NewGroupModal: FC<{
     } finally {
       setLoading(false);
     }
-  };
-  const debounce = <Params extends any[]>(
-    cb: (...args: Params) => any,
-    d: number
-  ): ((...args: Params) => void) => {
-    let timer: ReturnType<typeof setTimeout> | undefined = undefined;
-    return function (...args: Params) {
-      if (timer) clearTimeout(timer);
-      timer = setTimeout(() => cb(...args), d);
-    };
   };
   const handleSearch = debounce(async (search: string) => {
     try {
@@ -114,11 +119,7 @@ export const NewGroupModal: FC<{
           options={users.map((u: User) => {
             return { id: u._id, text: u.name };
           })}
-          onSelect={(n: OptionProps[]) => {
-            setSelected(n);
-          }}
-          selected={selected}
-          setSelected={setSelected}
+          onSelect={handleSelect}
           input={{
             placeholder: placeholders[0],
             onChange: (e) => handleSearch(e.target.value),
@@ -142,7 +143,7 @@ export const NewGroupModal: FC<{
           )}
         </div>
         <Button type="submit" btnCls="btn--primary">
-          create
+          {actStr[0]}
         </Button>
       </form>
     </Modal>

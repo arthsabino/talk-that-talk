@@ -14,6 +14,15 @@ export type Chat = {
   users: User[];
   _id: string;
   chatName: string;
+  groupAdmin?: User;
+  latestMessage?: Message;
+};
+
+export type Message = {
+  [key: string]: any;
+  content: string;
+  sender: User;
+  chat: Chat;
 };
 
 export type ChildrenElement = ReactNode;

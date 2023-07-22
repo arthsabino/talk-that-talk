@@ -1,40 +1,29 @@
 import { useDropdownVisibility } from "@/hooks/event";
-import { FC, useEffect, useMemo } from "react";
-import { MultiSelectDropdownProps, OptionProps } from "./props";
+import { FC, useMemo } from "react";
+import { MultiSelectDropdownProps } from "./props";
 
 const MultiSelectDropdown: FC<MultiSelectDropdownProps> = ({
   input,
   options,
   containerCls,
+  inputCls,
   label,
   onSelect,
-  selected,
-  setSelected,
 }) => {
   const { wrapperRef, isOpen, setIsOpen } = useDropdownVisibility();
   const isAllowed = useMemo(() => options && options.length > 0, [options]);
-  const selectOption = (op: OptionProps) => {
-    const i = selected.findIndex((x) => x.id === op.id);
-    if (i >= 0) {
-      setSelected((prev) => prev.filter((x) => x.id !== op.id));
-    } else {
-      setSelected(Array.from(new Set([...selected, op])));
-    }
-    setIsOpen(false);
-  };
-  useEffect(() => {
-    if (onSelect && selected) {
-      onSelect(selected);
-    }
-  }, [onSelect, selected]);
-
   return (
     <div
       className={`form-input select-input relative ${containerCls ?? ""}`}
       ref={wrapperRef}
     >
       {label ? <label className="">{label}</label> : null}
-      <input {...input} type="text" onFocus={() => setIsOpen(true)} />
+      <input
+        {...input}
+        type="text"
+        onFocus={() => setIsOpen(true)}
+        className={inputCls}
+      />
       {isOpen && isAllowed && (
         <ul className="form-dropdown">
           {options.map((op, index) => {
@@ -42,7 +31,8 @@ const MultiSelectDropdown: FC<MultiSelectDropdownProps> = ({
               <li
                 key={index}
                 onClick={() => {
-                  selectOption(op);
+                  onSelect(op);
+                  setIsOpen(false);
                 }}
               >
                 {op.text}

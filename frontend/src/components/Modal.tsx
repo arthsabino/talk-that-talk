@@ -7,8 +7,9 @@ const Modal: FC<{
   header: string;
   children?: ChildrenElement;
   bodyCls?: string;
+  contentCls?: string;
   onClose?: () => void;
-}> = ({ show, setShow, header, bodyCls, onClose, children }) => {
+}> = ({ show, setShow, header, bodyCls, contentCls, onClose, children }) => {
   const onCloseModal = () => {
     onClose?.();
     setShow(false);
@@ -18,7 +19,7 @@ const Modal: FC<{
       className={`modal-container ${show ? "animate-show" : "animate-hide"}`}
     >
       <div className="modal-overlay" onClick={onCloseModal} />
-      <div className="modal-content">
+      <div className={`modal-content ${contentCls ?? ""}`}>
         <div className="modal-header">
           <span>{header}</span>
           <span className="cross" onClick={onCloseModal}>

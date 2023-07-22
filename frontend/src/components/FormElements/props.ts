@@ -1,8 +1,6 @@
 import {
-  Dispatch,
   HTMLInputTypeAttribute,
   InputHTMLAttributes,
-  SetStateAction,
   TextareaHTMLAttributes,
 } from "react";
 
@@ -30,7 +28,5 @@ export type DropdownProps = Omit<TextInputProps, "input"> & {
 
 export type MultiSelectDropdownProps = Omit<DropdownProps, "onSelect"> & {
   input?: InputProps;
-  onSelect: (n: OptionProps[]) => void;
-  selected: OptionProps[];
-  setSelected: Dispatch<SetStateAction<OptionProps[]>>;
+  onSelect: (n: OptionProps) => void;
 };
