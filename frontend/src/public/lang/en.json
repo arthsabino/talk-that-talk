@@ -43,5 +43,5 @@
     "user_added": "User added",
     "user_removed": "User removed"
   },
-  "placeholders": ["Search names here", "Enter name here"]
+  "placeholders": ["Search names here", "Enter name here", "Enter message here..."]
 }

@@ -7,6 +7,7 @@ export const API_URL = {
   renameGroupChat: "/api/chats/rename",
   addUser: "/api/chats/groupadd",
   removeUser: "/api/chats/groupremove",
+  message: "/api/message",
 };
 
 export const CLOUDINARY_UPLOAD =
