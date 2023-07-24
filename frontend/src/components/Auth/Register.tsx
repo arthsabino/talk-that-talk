@@ -15,7 +15,7 @@ const Register = (): ReactElement => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [pic, setPic] = useState<File>();
+  const [picture, setPicture] = useState<File>();
   const [errors, setErrors] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const history = useNavigate();
@@ -24,7 +24,7 @@ const Register = (): ReactElement => {
     if (!e.target.files || !e.target.files[0]) {
       return;
     } else {
-      setPic(e.target.files[0]);
+      setPicture(e.target.files[0]);
     }
   };
   const addError = (err: string) => {
@@ -40,9 +40,9 @@ const Register = (): ReactElement => {
     if (!password) {
       addError(messages.password_required);
     }
-    if (!pic) {
+    if (!picture) {
       addError(messages.pic_required);
-    } else if (pic.type !== "image/jpeg" && pic.type !== "image/png") {
+    } else if (picture.type !== "image/jpeg" && picture.type !== "image/png") {
       addError(messages.pic_image_accepted);
     }
     if (password !== confirmPassword) {
@@ -53,9 +53,9 @@ const Register = (): ReactElement => {
       !email ||
       !name ||
       !password ||
-      !pic ||
+      !picture ||
       password !== confirmPassword ||
-      (pic.type !== "image/jpeg" && pic.type !== "image/png")
+      (picture.type !== "image/jpeg" && picture.type !== "image/png")
     );
   };
 
@@ -66,7 +66,7 @@ const Register = (): ReactElement => {
         name,
         email,
         password,
-        pic: picUrl,
+        picture: picUrl,
       },
       {
         headers: {
@@ -89,11 +89,11 @@ const Register = (): ReactElement => {
     e.preventDefault();
     setErrors([]);
     if (checkErrors()) return;
-    if (pic) {
+    if (picture) {
       try {
         setLoading(true);
         const picData = new FormData();
-        picData.append("file", pic);
+        picData.append("file", picture);
         picData.append("upload_preset", "talk-that-talk");
         picData.append("cloud_name", "talk-that-talk");
         await axios

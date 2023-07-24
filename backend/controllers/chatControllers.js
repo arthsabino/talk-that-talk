@@ -24,7 +24,7 @@ const accessChat = asyncHandler(async (req, res) => {
   //gets latest message with sender
   isChat = await User.populate(isChat, {
     path: "latestMessage.sender",
-    select: "name pic email",
+    select: "name picture email",
   });
 
   if (isChat.length > 0) {
@@ -62,12 +62,13 @@ const fetchChats = asyncHandler(async (req, res) => {
       .then(async (results) => {
         userChats = await User.populate(results, {
           path: "latestMessage.sender",
-          select: "name pic email",
+          select: "name picture email",
         });
-        res.status(200).send(userChats);
       });
+
+    res.status(200).send(userChats);
   } catch (error) {
-    res.sendStatus(400);
+    res.status(400).send({ message: error.message });
     throw new Error(error.message);
   }
 });
