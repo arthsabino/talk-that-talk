@@ -12,6 +12,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import { toast } from "react-toastify";
@@ -39,10 +40,12 @@ const ChatBox: FC<{ loadChat: boolean }> = ({ loadChat }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [msg, setMsg] = useState("");
   const [socketConnected, setSocketConnected] = useState(false);
-  const [typing, setTyping] = useState(false);
-  const [isTyping, setIsTyping] = useState(false);
+  const [receiverTyping, setReceiverTyping] = useState(false);
+  const [senderTyping, setSenderTyping] = useState(false);
   const [loading, setLoading] = useState(false);
   const { storeInfo } = useUserInfo();
+  const ref = useRef<HTMLDivElement>(null);
+  const msgListRef = useRef<HTMLDivElement>(null);
   const chatName = useMemo(() => {
     if (user && currentChat) return getChatName(user._id, currentChat);
   }, [user, currentChat]);
@@ -111,20 +114,23 @@ const ChatBox: FC<{ loadChat: boolean }> = ({ loadChat }) => {
       return;
     }
 
-    if (!typing) {
-      setTyping(true);
+    if (!senderTyping) {
+      setSenderTyping(true);
       socket.emit("typing", currentChat?._id);
     }
 
+    handleInputBlur();
+  };
+
+  const handleInputBlur = () => {
     let lastTypingTime = new Date().getTime();
     var timeLen = 3000;
     setTimeout(() => {
       var timeNow = new Date().getTime();
       var timeDiff = timeNow - lastTypingTime;
-
-      if (timeDiff >= timeLen && typing) {
-        socket.emit("stopTyping", currentChat?._id);
-        setTyping(false);
+      if (timeDiff >= timeLen && senderTyping) {
+        socket.emit("stop typing", currentChat?._id);
+        setSenderTyping(false);
       }
     }, timeLen);
   };
@@ -135,8 +141,8 @@ const ChatBox: FC<{ loadChat: boolean }> = ({ loadChat }) => {
       socket = io(endpoint);
       socket.emit("setup", user);
       socket.on("connected", () => setSocketConnected(true));
-      socket.on("typing", () => setIsTyping(true));
-      socket.on("stop typing", () => setIsTyping(false));
+      socket.on("typing", () => setReceiverTyping(true));
+      socket.on("stop typing", () => setReceiverTyping(false));
     }
   }, [user]);
 
@@ -159,6 +165,15 @@ const ChatBox: FC<{ loadChat: boolean }> = ({ loadChat }) => {
       }
     });
   });
+
+  useEffect(() => {
+    if (messages && messages.length > 0) {
+      const offsetTop = ref.current?.offsetTop;
+      if (offsetTop) {
+        msgListRef.current?.scrollTo({ top: offsetTop });
+      }
+    }
+  }, [messages, ref]);
   return (
     <>
       <Card
@@ -189,24 +204,29 @@ const ChatBox: FC<{ loadChat: boolean }> = ({ loadChat }) => {
               </span>
             </div>
             <Card containerCls="chat-content">
-              <div className="message-list-container">
+              <div ref={msgListRef} className="message-list-container">
                 <LoadingView show={loading} />
                 {messages.length > 0 ? (
                   <>
                     {messages.map((m, index) => (
-                      <MessageItem key={index} msg={m} />
+                      <MessageItem
+                        key={index}
+                        msg={m}
+                        wrapperRef={index === messages.length - 1 ? ref : null}
+                      />
                     ))}
                   </>
                 ) : (
                   <div className="no-messages">{chatStr.type_new_message}</div>
                 )}
               </div>
-              {isTyping ? <TypingAnimation /> : <></>}
+              {receiverTyping ? <TypingAnimation /> : <></>}
               <TextInput
                 input={{
                   value: msg,
                   onChange: (e) => handleTypeMessage(e),
                   onKeyDown: (e) => handleSendMessage(e),
+                  onBlur: () => handleInputBlur(),
                   placeholder: placeholders[2],
                 }}
                 inputCls="square chat-input"

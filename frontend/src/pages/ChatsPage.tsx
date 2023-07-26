@@ -5,14 +5,15 @@ import Sidebar from "@/components/Chats/Sidebar";
 import AppLayout from "@/components/Layouts/AppLayout";
 import ChatNavbar from "@/components/Navigation/ChatNavbar";
 import LoadingView from "@/components/Utility/LoadingView";
-import { useChatList, useUser } from "@/hooks/context";
+import { useChatList } from "@/hooks/context";
+import { useUserInfo } from "@/hooks/user";
 import { API_URL } from "@/util/Consts";
 import { fetcher } from "@/util/fetcher";
 import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 const ChatsPage = () => {
-  const { val: user } = useUser();
+  const { storeInfo: user } = useUserInfo();
   const { setVal: setChats } = useChatList();
   const [showSidebar, setShowSidebar] = useState(false);
   const [loadChat, setLoadChat] = useState(false);
@@ -21,7 +22,7 @@ const ChatsPage = () => {
     const fetchChats = async () => {
       setLoading(true);
       try {
-        const data = await fetcher(API_URL.getChats, user.token);
+        const data = await fetcher(API_URL.getChats, user?.token);
         setChats(data);
       } catch (error) {
         if (error instanceof AxiosError) {

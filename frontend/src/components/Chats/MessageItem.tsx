@@ -1,11 +1,15 @@
 import { useUserInfo } from "@/hooks/user";
 import { Message } from "@/models";
-import { FC } from "react";
+import { FC, RefObject } from "react";
 
-const MessageItem: FC<{ msg: Message }> = ({ msg }) => {
+const MessageItem: FC<{
+  msg: Message;
+  wrapperRef?: RefObject<HTMLDivElement> | null;
+}> = ({ msg, wrapperRef }) => {
   const { storeInfo } = useUserInfo();
   return (
     <div
+      ref={wrapperRef}
       className={`message-item ${
         storeInfo?._id === msg.sender._id ? "self" : ""
       }`}

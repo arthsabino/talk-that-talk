@@ -3,12 +3,9 @@ import ProviderLayout from "@/components/Layouts/ProviderLayout";
 import "@/styles/app.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useLanguage } from "./hooks/context";
 function App() {
-  const { app_name } = useLanguage();
   return (
     <ProviderLayout>
-      <title>{app_name}</title>
       <div className="app-container">
         <RoutesCtrl />
         <ToastContainer
