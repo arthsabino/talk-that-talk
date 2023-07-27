@@ -139,10 +139,12 @@ const ChatBox: FC<{ loadChat: boolean }> = ({ loadChat }) => {
     if (user) {
       const endpoint = process.env.REACT_APP_ENDPOINT || "";
       socket = io(endpoint);
-      socket.emit("setup", user);
-      socket.on("connected", () => setSocketConnected(true));
-      socket.on("typing", () => setReceiverTyping(true));
-      socket.on("stop typing", () => setReceiverTyping(false));
+      if(socket) {
+        socket.emit("setup", user);
+        socket.on("connected", () => setSocketConnected(true));
+        socket.on("typing", () => setReceiverTyping(true));
+        socket.on("stop typing", () => setReceiverTyping(false));
+      }
     }
   }, [user]);
 
@@ -154,16 +156,19 @@ const ChatBox: FC<{ loadChat: boolean }> = ({ loadChat }) => {
   }, [currentChat, fetchMessages, storeInfo]);
 
   useEffect(() => {
-    socket.on("message received", (newMessageReceived) => {
-      if (
-        !currentChatCmp ||
-        currentChatCmp._id !== newMessageReceived.chat._id
-      ) {
-        //notify
-      } else {
-        setMessages([...messages, newMessageReceived]);
-      }
-    });
+    if(socket) {
+      socket.on("message received", (newMessageReceived) => {
+        if (
+          !currentChatCmp ||
+          currentChatCmp._id !== newMessageReceived.chat._id
+        ) {
+          //notify
+        } else {
+          setMessages([...messages, newMessageReceived]);
+        }
+      });
+    }
+    
   });
 
   useEffect(() => {
@@ -204,8 +209,8 @@ const ChatBox: FC<{ loadChat: boolean }> = ({ loadChat }) => {
               </span>
             </div>
             <Card containerCls="chat-content">
+              <LoadingView show={loading} />
               <div ref={msgListRef} className="message-list-container">
-                <LoadingView show={loading} />
                 {messages.length > 0 ? (
                   <>
                     {messages.map((m, index) => (

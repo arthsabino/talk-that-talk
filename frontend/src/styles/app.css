@@ -232,7 +232,8 @@ aside {
   padding: 0.75rem 1rem;
 }
 
-.chat-list-item:hover {
+.chat-list-item:hover:not(.active),
+.chat-list-item.active {
   background-color: var(--primary);
 }
 
@@ -408,7 +409,8 @@ aside {
   border-top-right-radius: 0; */
   border-radius: 0;
   margin-top: 1rem;
-  padding: 0.5rem 1rem;
+  /* padding: 0.5rem 1rem; */
+  position: relative;
 }
 
 .chat-content > .form-input {
@@ -422,12 +424,10 @@ aside {
 .message-list-container {
   display: flex;
   flex-direction: column;
-  position: relative;
   width: 100%;
   gap: 1rem;
   min-height: 440px;
   overflow-y: scroll;
-  padding: 0.75rem 0;
 }
 
 .message-item {
@@ -470,7 +470,7 @@ aside {
 }
 
 .card.chat-content {
-  padding: 0.5rem 0 0;
+  padding: 0.75rem 0 0;
   border-bottom-left-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
 }
@@ -479,7 +479,7 @@ aside {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 250px;
+  min-height: 150px;
   height: 100%;
 }
 
@@ -779,6 +779,7 @@ aside {
 }
 
 .form-input input.chat-input[type=text] {
+  margin-top: 0.75rem;
   background-color: var(--variant-v1);
 }
 

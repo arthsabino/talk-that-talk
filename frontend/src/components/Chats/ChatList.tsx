@@ -1,4 +1,5 @@
 import { useChat, useChatList, useLanguage, useUser } from "@/hooks/context";
+import { Chat } from "@/models";
 import { getChatName } from "@/util/chat";
 import { FC, useState } from "react";
 import Button from "../Button";
@@ -9,12 +10,14 @@ const ChatList: FC = () => {
   const { val: chats } = useChatList();
   const { val: user } = useUser();
   const { chats: chatStr } = useLanguage();
-  const { val: chat, setVal: setChat } = useChat();
+  const { val: currentChat, setVal: setCurrentChat } = useChat();
   const [show, setShow] = useState(false);
   return (
     <>
       <Card
-        containerCls={`chat-list-container ${!chat ? "w-full active" : ""}`}
+        containerCls={`chat-list-container ${
+          !currentChat ? "w-full active" : ""
+        }`}
       >
         <div className="chat-list-header">
           <h2>{chatStr.my_chats}</h2>
@@ -29,12 +32,16 @@ const ChatList: FC = () => {
         </div>
         <div className="chat-list-content">
           {chats &&
-            chats.map((chat: any) => {
+            chats.map((chat: Chat) => {
               return (
                 <div
-                  key={chat._id}
-                  className="result-item chat-list-item"
-                  onClick={() => setChat(chat)}
+                  key={chat?._id}
+                  className={`result-item chat-list-item ${
+                    chat?._id === currentChat?._id ? "active" : ""
+                  }`}
+                  onClick={() => {
+                    if (chat?._id !== currentChat?._id) setCurrentChat(chat);
+                  }}
                 >
                   <div className="info">
                     <span>{getChatName(user._id, chat)}</span>
