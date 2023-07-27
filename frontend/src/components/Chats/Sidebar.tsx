@@ -4,7 +4,7 @@ import { User } from "@/models";
 import { API_URL } from "@/util/Consts";
 import { fetcher } from "@/util/fetcher";
 import axios from "axios";
-import { Dispatch, FC, SetStateAction, useState } from "react";
+import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Button from "../Button";
 import TextInput from "../FormElements/TextInput";
@@ -57,7 +57,7 @@ const Sidebar: FC<{
         `${API_URL.searchUser}?search=${search}`,
         user.token
       );
-      if (data && data.length > 0) {
+      if (data) {
         setUsers(data);
       }
     } catch (error) {
@@ -67,6 +67,23 @@ const Sidebar: FC<{
       setLoading(false);
     }
   };
+
+  const handleEnter = (
+    e:
+      | React.KeyboardEvent<HTMLTextAreaElement>
+      | React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (e.key === "Enter" && search) {
+      handleSearch();
+    }
+  };
+
+  useEffect(() => {
+    if (!show) {
+      setUsers([]);
+      setSearch("");
+    }
+  }, [show]);
   return (
     <aside className={`${show ? "animate-show" : "animate-hide"}`}>
       <div className="aside-overlay" />
@@ -85,6 +102,7 @@ const Sidebar: FC<{
           input={{
             placeholder: chatStr.enter_here,
             onChange: (e) => setSearch(e.target.value),
+            onKeyDown: (e) => handleEnter(e),
             value: search,
           }}
         />
