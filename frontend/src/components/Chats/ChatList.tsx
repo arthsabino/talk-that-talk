@@ -44,7 +44,7 @@ const ChatList: FC = () => {
                   }}
                 >
                   <div className="info">
-                    <span>{getChatName(user._id, chat)}</span>
+                    <span>{getChatName(user?._id, chat)}</span>
                   </div>
                 </div>
               );

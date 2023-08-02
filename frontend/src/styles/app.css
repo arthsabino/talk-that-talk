@@ -541,6 +541,8 @@ aside {
 .user-dropdown {
   position: absolute;
   width: 100px;
+  max-height: 150px;
+  overflow-y: scroll;
   background-color: white;
   color: var(--dark);
   padding: 0.25rem 0.5rem 0.75rem 0.75rem;
@@ -560,6 +562,38 @@ aside {
 
 .user-dropdown-list > li:hover {
   color: var(--primary);
+}
+
+.user-dropdown.notification {
+  width: 190px;
+}
+
+.notif-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.notif-item > .name:not(.is-read) {
+  font-weight: 700;
+}
+
+.notif-item > .preview {
+  font-size: small;
+}
+
+.notif-num {
+  position: absolute;
+  top: -50%;
+  right: -80%;
+  border-radius: 50%;
+  background-color: var(--primary);
+  color: white;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  width: 20px;
 }
 
 /* modals */

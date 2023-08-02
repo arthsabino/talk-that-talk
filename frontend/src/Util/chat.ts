@@ -5,7 +5,7 @@ export const getOtherUser = (userId: string, chat: Chat): User | undefined => {
   return otherUser;
 };
 export const getChatName = (userId: string, chat: Chat): string => {
-  if (!chat) return "";
+  if (!chat || !userId) return "";
   else if (Boolean(chat.isGroupChat)) {
     return chat.chatName;
   } else {

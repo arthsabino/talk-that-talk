@@ -8,6 +8,8 @@ export const API_URL = {
   addUser: "/api/chats/groupadd",
   removeUser: "/api/chats/groupremove",
   message: "/api/message",
+  notification: "/api/notification",
+  readNotification: "/api/notification/read",
 };
 
 export const CLOUDINARY_UPLOAD =

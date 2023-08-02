@@ -25,4 +25,12 @@ export type Message = {
   chat: Chat;
 };
 
+export type Notification = {
+  [key: string]: any;
+  _id: string;
+  isRead: boolean;
+  content: string;
+  message: Message;
+};
+
 export type ChildrenElement = ReactNode;
