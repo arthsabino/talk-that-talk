@@ -2,8 +2,15 @@ const mongoose = require("mongoose");
 
 const NotificationSchema = new mongoose.Schema(
   {
-    receivers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    isRead: { type: Boolean, default: false },
+    receivers: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+        isRead: { type: Boolean, default: false },
+      },
+    ],
     content: { type: String, trim: true },
     message: { type: mongoose.Schema.Types.ObjectId, ref: "Message" },
   },

@@ -1,13 +1,8 @@
 import { useLanguage } from "@/hooks/context";
 import { useUserInfo } from "@/hooks/user";
-import { Notification } from "@/models";
-import { API_URL } from "@/util/Consts";
 import svgs from "@/util/Images";
-import { fetcher } from "@/util/fetcher";
-import { AxiosError } from "axios";
-import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, FC, SetStateAction, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import Button from "../Button";
 import { ProfileModal } from "../Modals/ProfileModal";
 
@@ -19,33 +14,31 @@ const ChatNavbar: FC<{ setShow: Dispatch<SetStateAction<boolean>> }> = ({
     chats: { user_dropdown },
   } = useLanguage();
   const { storeInfo } = useUserInfo();
-  const [showNotifDropdown, setShowNotifDropdown] = useState(false);
+  // const [showNotifDropdown, setShowNotifDropdown] = useState(false);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [notifications, setNotifications] = useState<Notification[]>([]);
   const history = useNavigate();
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
     history("/");
   };
 
-  useEffect(() => {
-    const fetchChats = async () => {
-      try {
-        const data = await fetcher(API_URL.notification, storeInfo?.token);
-        console.log(data);
-        setNotifications(data);
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          toast.error(error?.response?.data?.message);
-        }
-      }
-    };
+  // useEffect(() => {
+  //   const fetchChats = async () => {
+  //     try {
+  //       const data = await fetcher(API_URL.notification, storeInfo?.token);
+  //       setNotifications(data);
+  //     } catch (error) {
+  //       if (error instanceof AxiosError) {
+  //         toast.error(error?.response?.data?.message);
+  //       }
+  //     }
+  //   };
 
-    if (storeInfo) {
-      fetchChats();
-    }
-  }, [storeInfo]);
+  //   if (storeInfo) {
+  //     fetchChats();
+  //   }
+  // }, [storeInfo]);
   return (
     <nav className="chat-navbar">
       <div className="main-container nav-container chat-container">
@@ -61,7 +54,7 @@ const ChatNavbar: FC<{ setShow: Dispatch<SetStateAction<boolean>> }> = ({
           <span>{app_name}</span>
         </div>
         <div className="account-options">
-          <div className="relative">
+          {/* <div className="relative">
             {!showNotifDropdown ? (
               <div className="notif-num">
                 {notifications && notifications.length > 0
@@ -97,7 +90,7 @@ const ChatNavbar: FC<{ setShow: Dispatch<SetStateAction<boolean>> }> = ({
                 </ul>
               </div>
             )}
-          </div>
+          </div> */}
           <div className="relative">
             <span
               onClick={() => setShowUserDropdown((prev) => !prev)}

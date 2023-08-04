@@ -9,7 +9,7 @@ const fetchNotifications = asyncHandler(async (req, res) => {
   try {
     let notificationList = await Notification.find(
       {
-        receivers: { $elemMatch: { $eq: req.user._id } },
+        "receivers.user": req.user._id,
       },
       { receivers: 0 }
     )
@@ -41,10 +41,11 @@ const createNotification = asyncHandler(async (req, res) => {
       "users",
       "-password"
     );
-    const receivers =
+    let receivers =
       chat.users && chat.users.length > 0
         ? chat.users.filter((u) => u._id != userId)
         : [];
+    receivers = receivers.map((r) => ({ user: r, isRead: false }));
     const createdNotification = await Notification.create({
       ...newNotificationData,
       receivers: receivers,

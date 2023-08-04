@@ -209,7 +209,7 @@ const ChatBox: FC<{ loadChat: boolean }> = ({ loadChat }) => {
               </span>
             </div>
             <Card containerCls="chat-content">
-              <LoadingView show={loading} />
+              <LoadingView spinner show={loading} />
               <div ref={msgListRef} className="message-list-container">
                 {messages.length > 0 ? (
                   <>

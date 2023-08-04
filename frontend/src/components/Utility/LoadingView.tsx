@@ -1,21 +1,22 @@
 import svgs from "@/util/Images";
 import { FC } from "react";
 
-export const LoadingView: FC<{ show: boolean; fixed?: boolean }> = ({
-  show,
-  fixed = false,
-}) => {
+export const LoadingView: FC<{
+  show: boolean;
+  fixed?: boolean;
+  spinner?: boolean;
+}> = ({ show, fixed = false, spinner = false }) => {
   return (
     <>
-      {show && (
+      {show ? (
         <div
-          className={`${
-            fixed ? "fixed-loader" : "inside-loader"
+          className={`${fixed ? "fixed-loader" : "inside-loader"} ${
+            spinner ? "spinner" : ""
           } loader-container`}
         >
-          {svgs.loading_circles}
+          {spinner ? svgs.spinner : svgs.loading_circles}
         </div>
-      )}
+      ) : null}
     </>
   );
 };

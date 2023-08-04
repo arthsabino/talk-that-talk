@@ -42,6 +42,7 @@ const allMessages = asyncHandler(async (req, res) => {
     const messageList = await Message.find({ chat: req.params.chatId })
       .populate("sender", "name picture email")
       .populate("chat");
+    //update notification here
     res.send(messageList);
   } catch (error) {
     res.status(401);
