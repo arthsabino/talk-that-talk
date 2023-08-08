@@ -2,7 +2,6 @@ import { useChat, useChatList, useLanguage, useUser } from "@/hooks/context";
 import { Chat } from "@/models";
 import { getChatName } from "@/util/chat";
 import { FC, useState } from "react";
-import Button from "../Button";
 import Card from "../Card";
 import { NewGroupModal } from "../Modals/NewGroupModal";
 
@@ -21,14 +20,14 @@ const ChatList: FC = () => {
       >
         <div className="chat-list-header">
           <h2>{chatStr.my_chats}</h2>
-          <Button
+          {/* <Button
             btnCls="btn--create-group"
             onClick={() => {
               setShow(true);
             }}
           >
             {chatStr.add_group}
-          </Button>
+          </Button> */}
         </div>
         <div className="chat-list-content">
           {chats &&
