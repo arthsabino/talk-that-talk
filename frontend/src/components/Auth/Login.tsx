@@ -82,7 +82,7 @@ const Login = (): ReactElement => {
         <Button type="submit" btnCls="btn--secondary">
           {login}
         </Button>
-        <Button btnCls="btn--primary">{btns[0]}</Button>
+        {/* <Button btnCls="btn--primary">{btns[0]}</Button> */}
       </div>
     </form>
   );
