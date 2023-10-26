@@ -1,5 +1,6 @@
 import { useLanguage } from "@/hooks/context";
-import { API_URL, CLOUDINARY_UPLOAD } from "@/util/Consts";
+import { getSignature } from "@/lib/cloudinary";
+import { API_URL } from "@/lib/consts";
 import axios, { AxiosError } from "axios";
 import { ChangeEvent, FormEvent, ReactElement, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -93,11 +94,15 @@ const Register = (): ReactElement => {
       try {
         setLoading(true);
         const picData = new FormData();
+        const { timestamp, signature } = await getSignature();
         picData.append("file", picture);
-        picData.append("upload_preset", "talk-that-talk");
-        picData.append("cloud_name", "talk-that-talk");
+        picData.append("upload_preset", "talk-that-talk-preset");
+        picData.append("api_key", process.env.CLOUDINARY_API_KEY!);
+        picData.append("folder", "talk-that-talk");
+        picData.append("timestamp", timestamp?.toString());
+        picData.append("signature", signature);
         await axios
-          .post(CLOUDINARY_UPLOAD, picData, {
+          .post(process.env.CLOUDINARY_CLOUD_NAME!, picData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },

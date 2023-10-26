@@ -1,5 +1,5 @@
 import { useLanguage } from "@/hooks/context";
-import { API_URL } from "@/util/Consts";
+import { API_URL } from "@/lib/consts";
 import axios, { AxiosError } from "axios";
 import { FormEvent, ReactElement, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -9,20 +9,20 @@ import TextInput from "../FormElements/TextInput";
 import LoadingView from "../Utility/LoadingView";
 
 const Login = (): ReactElement => {
-  const { messages } = useLanguage()
+  const { messages } = useLanguage();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useNavigate();
   const {
-    auth: { login, forms, btns },
+    auth: { login, forms },
   } = useLanguage();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if(!email || !password) {
+    if (!email || !password) {
       toast.error(messages.fill_out_fields);
-      return
+      return;
     }
     setLoading(true);
     try {

@@ -1,4 +1,4 @@
-import svgs from "@/util/Images";
+import svgs from "@/lib/Images";
 import { FC } from "react";
 
 export const LoadingView: FC<{

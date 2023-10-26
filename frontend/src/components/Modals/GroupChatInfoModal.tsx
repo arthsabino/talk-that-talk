@@ -1,9 +1,9 @@
 import { useChat, useChatList, useLanguage, useUser } from "@/hooks/context";
 import { useUserInfo } from "@/hooks/user";
+import { API_URL } from "@/lib/consts";
+import debounce from "@/lib/debounce";
+import { fetcher } from "@/lib/fetcher";
 import { Chat, User } from "@/models";
-import { API_URL } from "@/util/Consts";
-import debounce from "@/util/debounce";
-import { fetcher } from "@/util/fetcher";
 import axios, { AxiosError } from "axios";
 import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import { toast } from "react-toastify";

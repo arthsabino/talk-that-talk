@@ -1,8 +1,8 @@
 import { useChat, useLanguage, useUser } from "@/hooks/context";
 import { useUserInfo } from "@/hooks/user";
+import { API_URL } from "@/lib/consts";
+import { fetcher } from "@/lib/fetcher";
 import { User } from "@/models";
-import { API_URL } from "@/util/Consts";
-import { fetcher } from "@/util/fetcher";
 import axios from "axios";
 import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import { toast } from "react-toastify";

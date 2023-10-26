@@ -1,6 +1,6 @@
 import { useChat, useChatList, useLanguage, useUser } from "@/hooks/context";
+import { getChatName } from "@/lib/chat";
 import { Chat } from "@/models";
-import { getChatName } from "@/util/chat";
 import { FC, useState } from "react";
 import Card from "../Card";
 import { NewGroupModal } from "../Modals/NewGroupModal";

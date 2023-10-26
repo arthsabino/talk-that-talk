@@ -1,9 +1,9 @@
 import { useChat, useLanguage, useUser } from "@/hooks/context";
 import { useUserInfo } from "@/hooks/user";
+import svgs from "@/lib/Images";
+import { getChatName, getOtherUser } from "@/lib/chat";
+import { API_URL } from "@/lib/consts";
 import { Chat, Message, User } from "@/models";
-import { API_URL } from "@/util/Consts";
-import svgs from "@/util/Images";
-import { getChatName, getOtherUser } from "@/util/chat";
 import axios, { AxiosError } from "axios";
 import {
   Dispatch,

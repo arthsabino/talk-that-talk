@@ -11,6 +11,3 @@ export const API_URL = {
   notification: "/api/notification",
   readNotification: "/api/notification/read",
 };
-
-export const CLOUDINARY_UPLOAD =
-  "https://api.cloudinary.com/v1_1/talk-that-talk/image/upload";
