@@ -107,7 +107,7 @@ const ChatBox: FC<{ loadChat: boolean }> = ({ loadChat }) => {
         socket.emit("new message", data);
         setMessages([...messages, data]);
         if (chats.findIndex((c: Chat) => c._id === currentChat?._id) < 0) {
-          const data = await fetcher(API_URL.getChats, user?.token);
+          const data = await fetcher(API_URL.getChats, storeInfo?.token);
           setChats(data);
         }
       } catch (error) {
