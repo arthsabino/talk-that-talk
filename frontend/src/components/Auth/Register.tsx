@@ -82,7 +82,6 @@ const Register = (): ReactElement => {
 
         if (userData) {
           setLoading(false);
-          console.log(JSON.stringify(userData));
           localStorage.removeItem("userInfo");
           localStorage.setItem("userInfo", JSON.stringify(userData));
           toast.success(messages.register_successful);

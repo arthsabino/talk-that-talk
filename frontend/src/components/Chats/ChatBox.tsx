@@ -1,8 +1,9 @@
-import { useChat, useLanguage, useUser } from "@/hooks/context";
+import { useChat, useChatList, useLanguage, useUser } from "@/hooks/context";
 import { useUserInfo } from "@/hooks/user";
 import svgs from "@/lib/Images";
 import { getChatName, getOtherUser } from "@/lib/chat";
 import { API_URL } from "@/lib/consts";
+import { fetcher } from "@/lib/fetcher";
 import { Chat, Message, User } from "@/models";
 import axios, { AxiosError } from "axios";
 import {
@@ -46,12 +47,16 @@ const ChatBox: FC<{ loadChat: boolean }> = ({ loadChat }) => {
   const { storeInfo } = useUserInfo();
   const ref = useRef<HTMLDivElement>(null);
   const msgListRef = useRef<HTMLDivElement>(null);
+  const { val: chats, setVal: setChats } = useChatList();
   const chatName = useMemo(() => {
     if (user && currentChat) return getChatName(user._id, currentChat);
   }, [user, currentChat]);
 
   const fetchMessages = useCallback(async () => {
     setLoading(true);
+    if (!storeInfo) {
+      setMessages([]);
+    }
     try {
       const { data } = await axios.post(
         `${API_URL.message}/${currentChat?._id}`,
@@ -96,6 +101,10 @@ const ChatBox: FC<{ loadChat: boolean }> = ({ loadChat }) => {
         );
         socket.emit("new message", data);
         setMessages([...messages, data]);
+        if(chats.findIndex((c:Chat) => c._id === currentChat?._id) < 0) {
+          const data = await fetcher(API_URL.getChats, user?.token);
+          setChats(data);
+        }
       } catch (error) {
         if (error instanceof AxiosError) {
           toast.error(error?.response?.data?.message);

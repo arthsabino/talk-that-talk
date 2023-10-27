@@ -1,6 +1,7 @@
-import { useLanguage } from "@/hooks/context";
+import { useChat, useLanguage } from "@/hooks/context";
 import { useUserInfo } from "@/hooks/user";
 import svgs from "@/lib/Images";
+import { Chat } from "@/models";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../Button";
@@ -19,9 +20,13 @@ export default function ChatNavbar({ setShow }: ChatNavbarProps) {
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const history = useNavigate();
+  const {
+    setVal: setCurrentChat,
+  }: { setVal: Dispatch<SetStateAction<Chat | null>> } = useChat();
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
     history("/");
+    setCurrentChat(null);
   };
 
   // useEffect(() => {
@@ -125,4 +130,4 @@ export default function ChatNavbar({ setShow }: ChatNavbarProps) {
       />
     </nav>
   );
-};
+}
