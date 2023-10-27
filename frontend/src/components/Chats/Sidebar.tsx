@@ -21,6 +21,7 @@ const Sidebar: FC<{
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
+  const [allowSearch, setAllowSearch] = useState(false)
   const { setVal } = useChat();
   const { storeInfo } = useUserInfo();
   const accessChat = async (userId: string) => {
@@ -58,6 +59,7 @@ const Sidebar: FC<{
         user.token
       );
       if (data) {
+        setAllowSearch(true)
         setUsers(data);
       }
     } catch (error) {
@@ -82,6 +84,7 @@ const Sidebar: FC<{
     if (!show) {
       setUsers([]);
       setSearch("");
+      setAllowSearch(false)
     }
   }, [show]);
   return (
@@ -109,20 +112,24 @@ const Sidebar: FC<{
         <Button btnCls="btn--search-user" onClick={handleSearch}>
           Search
         </Button>
-        <div className="search-results">
-          {users.map((u) => {
-            return (
-              <SearchResultItem
-                key={u._id}
-                user={u}
-                onClick={() => {
-                  accessChat(u._id);
-                  setShow(false);
-                }}
-              />
-            );
-          })}
-        </div>
+        {users && users.length > 0 ? (
+          <div className="search-results">
+            {users.map((u) => {
+              return (
+                <SearchResultItem
+                  key={u._id}
+                  user={u}
+                  onClick={() => {
+                    accessChat(u._id);
+                    setShow(false);
+                  }}
+                />
+              );
+            })}
+          </div>
+        ) : allowSearch ? (
+          <div className="no-results">{chatStr.no_results}</div>
+        ) : null}
       </div>
     </aside>
   );

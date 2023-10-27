@@ -49,7 +49,7 @@ const ChatsPage = () => {
       <div className="chats-page-container">
         {user && (
           <>
-            <ChatList />
+            <ChatList setShow={setShowSidebar} />
             <ChatBox loadChat={loadChat} />
           </>
         )}

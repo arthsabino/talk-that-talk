@@ -10,4 +10,5 @@ export const API_URL = {
   message: "/api/message",
   notification: "/api/notification",
   readNotification: "/api/notification/read",
+  signature: "/api/cloudinary/signature",
 };

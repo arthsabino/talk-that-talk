@@ -18,5 +18,5 @@
     "checkJs": false
   },
   "include": ["src"],
-  "extends": ["./tsconfig.paths.json"]
+  "extends": "./tsconfig.paths.json"
 }

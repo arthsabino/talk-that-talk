@@ -1,5 +1,4 @@
 import { useLanguage } from "@/hooks/context";
-import { getSignature } from "@/lib/cloudinary";
 import { API_URL } from "@/lib/consts";
 import axios, { AxiosError } from "axios";
 import { ChangeEvent, FormEvent, ReactElement, useState } from "react";
@@ -59,33 +58,6 @@ const Register = (): ReactElement => {
       (picture.type !== "image/jpeg" && picture.type !== "image/png")
     );
   };
-
-  const registerUser = async (picUrl: string) => {
-    const { data: userData } = await axios.post(
-      API_URL.register,
-      {
-        name,
-        email,
-        password,
-        picture: picUrl,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    if (userData) {
-      setLoading(false);
-      console.log(JSON.stringify(userData));
-      localStorage.removeItem("userInfo");
-      localStorage.setItem("userInfo", JSON.stringify(userData));
-      toast.success(messages.register_successful);
-      history("/chats");
-    }
-  };
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrors([]);
@@ -93,25 +65,29 @@ const Register = (): ReactElement => {
     if (picture) {
       try {
         setLoading(true);
-        const picData = new FormData();
-        const { timestamp, signature } = await getSignature();
-        picData.append("file", picture);
-        picData.append("upload_preset", "talk-that-talk-preset");
-        picData.append("api_key", process.env.CLOUDINARY_API_KEY!);
-        picData.append("folder", "talk-that-talk");
-        picData.append("timestamp", timestamp?.toString());
-        picData.append("signature", signature);
-        await axios
-          .post(process.env.CLOUDINARY_CLOUD_NAME!, picData, {
+        const clFormData = new FormData();
+        clFormData.append("file", picture);
+        clFormData.append("name", name);
+        clFormData.append("email", email);
+        clFormData.append("password", password);
+        const { data: userData } = await axios.post(
+          API_URL.register,
+          clFormData,
+          {
             headers: {
               "Content-Type": "multipart/form-data",
             },
-          })
-          .then((res) => {
-            if (res && res.data && res.data.url) {
-              registerUser(res.data.url);
-            }
-          });
+          }
+        );
+
+        if (userData) {
+          setLoading(false);
+          console.log(JSON.stringify(userData));
+          localStorage.removeItem("userInfo");
+          localStorage.setItem("userInfo", JSON.stringify(userData));
+          toast.success(messages.register_successful);
+          history("/chats");
+        }
       } catch (error) {
         if (error instanceof AxiosError) {
           toast.error(error?.response?.data?.message);

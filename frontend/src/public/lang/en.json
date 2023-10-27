@@ -22,7 +22,9 @@
     "no_user_selected": "No users selected",
     "create_new_gc": "Create new group chat",
     "select_chat": "Select chat from list",
-    "type_new_message": "Type a message now to start your chat!"
+    "type_new_message": "Type a message now to start your chat!",
+    "no_chat": ["Please click on ", "to start chatting"],
+    "no_results": "No results found."
   },
   "actions": ["Create", "Update", "Add", "Leave Group"],
   "messages": {

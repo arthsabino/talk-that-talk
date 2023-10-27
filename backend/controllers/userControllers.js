@@ -2,14 +2,31 @@
 const asyncHandler = require("express-async-handler");
 const User = require("../models/UserModel");
 const generateToken = require("../config/generateToken");
+const { uploadToCloudinary } = require("../services/uploadImage");
+const { bufferToDataURI } = require("../utils/file");
 
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password, picture } = req.body;
+  const { name, email, password } = req.body;
+  const { file } = req;
   if (!name || !email || !password) {
     res.status(400);
     throw new Error("Please enter all fields");
   }
 
+  if (!file) {
+    res.status(400);
+    throw new Error("Image is required");
+  }
+
+  const fileFormat = file.mimetype.split("/")[1];
+  const { base64 } = bufferToDataURI(fileFormat, file.buffer);
+
+  const picture = await uploadToCloudinary(base64, fileFormat);
+
+  if (!picture) {
+    res.status(400);
+    throw new Error("Image error");
+  }
   const userExists = await User.findOne({ email });
 
   if (userExists) {

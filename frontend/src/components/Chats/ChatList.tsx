@@ -1,11 +1,16 @@
 import { useChat, useChatList, useLanguage, useUser } from "@/hooks/context";
+import svgs from "@/lib/Images";
 import { getChatName } from "@/lib/chat";
 import { Chat } from "@/models";
-import { FC, useState } from "react";
+import { Dispatch, FC, SetStateAction, useState } from "react";
+import Button from "../Button";
 import Card from "../Card";
 import { NewGroupModal } from "../Modals/NewGroupModal";
 
-const ChatList: FC = () => {
+interface ChatListProps {
+  setShow: Dispatch<SetStateAction<boolean>>;
+}
+export default function ChatList({ setShow: setSidebarShow }: ChatListProps) {
   const { val: chats } = useChatList();
   const { val: user } = useUser();
   const { chats: chatStr } = useLanguage();
@@ -29,9 +34,10 @@ const ChatList: FC = () => {
             {chatStr.add_group}
           </Button> */}
         </div>
-        <div className="chat-list-content">
-          {chats &&
-            chats.map((chat: Chat) => {
+
+        {chats && chats.length > 0 ? (
+          <div className="chat-list-content">
+            {chats.map((chat: Chat) => {
               return (
                 <div
                   key={chat?._id}
@@ -48,7 +54,21 @@ const ChatList: FC = () => {
                 </div>
               );
             })}
-        </div>
+          </div>
+        ) : (
+          <div className="no-chat-content chat-list">
+            {chatStr.no_chat[0]}
+            <Button
+              btnCls="btn--search"
+              onClick={() => {
+                setSidebarShow(true);
+              }}
+            >
+              <span>{svgs.search}</span>
+            </Button>
+            {chatStr.no_chat[1]}
+          </div>
+        )}
       </Card>
       <NewGroupModal show={show} setShow={setShow} />
     </>
@@ -68,5 +88,3 @@ export const AddedNameItem: FC<{ name: string; onRemove: () => void }> = ({
     </div>
   );
 };
-
-export default ChatList;

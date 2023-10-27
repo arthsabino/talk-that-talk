@@ -12,12 +12,13 @@ const HomePage = () => {
       history("/chats");
     }
   }, [history, storeInfo]);
+  if (!Boolean(history)) {
+    return <></>;
+  }
   return (
-    Boolean(history) && (
-      <AppLayout>
-        <AuthCard />
-      </AppLayout>
-    )
+    <AppLayout>
+      <AuthCard />
+    </AppLayout>
   );
 };
 

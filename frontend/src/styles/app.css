@@ -50,6 +50,10 @@ ul {
   list-style-position: inside;
 }
 
+.text-white {
+  color: var(--white)
+}
+
 .flex {
   display: flex;
 }
@@ -212,6 +216,10 @@ aside {
   gap: 1rem;
   padding: 1rem 0;
   width: 100%;
+}
+
+.no-results {
+  margin-top: 1rem;
 }
 
 .result-item {
@@ -488,6 +496,15 @@ aside {
   justify-content: center;
   min-height: 150px;
   height: 100%;
+}
+.no-chat-content.chat-list {
+  color: var(--white);
+  gap: 0.5rem;
+}
+
+.no-chat-content.chat-list span {
+  height: 1rem;
+  width: 1rem;
 }
 
 .arrow,

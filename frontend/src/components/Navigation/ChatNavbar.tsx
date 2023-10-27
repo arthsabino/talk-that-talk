@@ -1,14 +1,15 @@
 import { useLanguage } from "@/hooks/context";
 import { useUserInfo } from "@/hooks/user";
 import svgs from "@/lib/Images";
-import { Dispatch, FC, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../Button";
 import { ProfileModal } from "../Modals/ProfileModal";
 
-const ChatNavbar: FC<{ setShow: Dispatch<SetStateAction<boolean>> }> = ({
-  setShow,
-}) => {
+interface ChatNavbarProps {
+  setShow: Dispatch<SetStateAction<boolean>>;
+}
+export default function ChatNavbar({ setShow }: ChatNavbarProps) {
   const {
     app_name,
     chats: { user_dropdown },
@@ -125,5 +126,3 @@ const ChatNavbar: FC<{ setShow: Dispatch<SetStateAction<boolean>> }> = ({
     </nav>
   );
 };
-
-export default ChatNavbar;
