@@ -17,5 +17,6 @@
   "js/ts.implicitProjectConfig.checkJs": true,
   "javascript.updateImportsOnFileMove.enabled": "always",
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "css.customData": [".vscode/css_custom_data.json"]
+  "css.customData": [".vscode/css_custom_data.json"],
+  "eslint.workingDirectories": ["./backend", "./frontend"]
 }
