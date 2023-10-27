@@ -1,4 +1,5 @@
-import { useChat, useChatList, useLanguage, useUser } from "@/hooks/context";
+import { useChat, useChatList, useLanguage } from "@/hooks/context";
+import { useUserInfo } from "@/hooks/user";
 import svgs from "@/lib/Images";
 import { getChatName } from "@/lib/chat";
 import { Chat } from "@/models";
@@ -12,7 +13,7 @@ interface ChatListProps {
 }
 export default function ChatList({ setShow: setSidebarShow }: ChatListProps) {
   const { val: chats } = useChatList();
-  const { val: user } = useUser();
+  const { storeInfo } = useUserInfo();
   const { chats: chatStr } = useLanguage();
   const { val: currentChat, setVal: setCurrentChat } = useChat();
   const [show, setShow] = useState(false);
@@ -49,7 +50,7 @@ export default function ChatList({ setShow: setSidebarShow }: ChatListProps) {
                   }}
                 >
                   <div className="info">
-                    <span>{getChatName(user?._id, chat)}</span>
+                    <span>{getChatName(storeInfo?._id as string, chat)}</span>
                   </div>
                 </div>
               );
@@ -73,7 +74,7 @@ export default function ChatList({ setShow: setSidebarShow }: ChatListProps) {
       <NewGroupModal show={show} setShow={setShow} />
     </>
   );
-};
+}
 
 export const AddedNameItem: FC<{ name: string; onRemove: () => void }> = ({
   name,

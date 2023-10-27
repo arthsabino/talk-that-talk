@@ -1,4 +1,4 @@
-import { useChat, useChatList, useLanguage, useUser } from "@/hooks/context";
+import { useChat, useChatList, useLanguage } from "@/hooks/context";
 import { useUserInfo } from "@/hooks/user";
 import svgs from "@/lib/Images";
 import { getChatName, getOtherUser } from "@/lib/chat";
@@ -29,7 +29,6 @@ import MessageItem from "./MessageItem";
 let socket: Socket, currentChatCmp: Chat;
 const ChatBox: FC<{ loadChat: boolean }> = ({ loadChat }) => {
   const { chats: chatStr, placeholders } = useLanguage();
-  const { val: user } = useUser();
   const {
     val: currentChat,
     setVal: setCurrentChat,
@@ -49,8 +48,9 @@ const ChatBox: FC<{ loadChat: boolean }> = ({ loadChat }) => {
   const msgListRef = useRef<HTMLDivElement>(null);
   const { val: chats, setVal: setChats } = useChatList();
   const chatName = useMemo(() => {
-    if (user && currentChat) return getChatName(user._id, currentChat);
-  }, [user, currentChat]);
+    if (storeInfo && currentChat)
+      return getChatName(storeInfo._id, currentChat);
+  }, [storeInfo, currentChat]);
 
   const fetchMessages = useCallback(async () => {
     setLoading(true);
@@ -85,6 +85,11 @@ const ChatBox: FC<{ loadChat: boolean }> = ({ loadChat }) => {
     if (e.key === "Enter" && msg) {
       socket.emit("stop typing", currentChat?._id);
       setMsg("");
+
+      if (chats.findIndex((c: Chat) => c._id === currentChat?._id) < 0) {
+        const newChatList = await fetcher(API_URL.getChats, storeInfo?.token);
+        setChats(newChatList);
+      }
       try {
         const { data } = await axios.post(
           API_URL.message,
@@ -101,7 +106,7 @@ const ChatBox: FC<{ loadChat: boolean }> = ({ loadChat }) => {
         );
         socket.emit("new message", data);
         setMessages([...messages, data]);
-        if(chats.findIndex((c:Chat) => c._id === currentChat?._id) < 0) {
+        if (chats.findIndex((c: Chat) => c._id === currentChat?._id) < 0) {
           const data = await fetcher(API_URL.getChats, user?.token);
           setChats(data);
         }
@@ -145,17 +150,17 @@ const ChatBox: FC<{ loadChat: boolean }> = ({ loadChat }) => {
   };
 
   useEffect(() => {
-    if (user) {
+    if (storeInfo) {
       const endpoint = process.env.REACT_APP_ENDPOINT || "";
       socket = io(endpoint);
-      if(socket) {
-        socket.emit("setup", user);
+      if (socket) {
+        socket.emit("setup", storeInfo);
         socket.on("connected", () => setSocketConnected(true));
         socket.on("typing", () => setReceiverTyping(true));
         socket.on("stop typing", () => setReceiverTyping(false));
       }
     }
-  }, [user]);
+  }, [storeInfo]);
 
   useEffect(() => {
     if (currentChat && storeInfo && fetchMessages) {
@@ -165,7 +170,7 @@ const ChatBox: FC<{ loadChat: boolean }> = ({ loadChat }) => {
   }, [currentChat, fetchMessages, storeInfo]);
 
   useEffect(() => {
-    if(socket) {
+    if (socket) {
       socket.on("message received", (newMessageReceived) => {
         if (
           !currentChatCmp ||
@@ -177,7 +182,6 @@ const ChatBox: FC<{ loadChat: boolean }> = ({ loadChat }) => {
         }
       });
     }
-    
   });
 
   useEffect(() => {
@@ -209,7 +213,9 @@ const ChatBox: FC<{ loadChat: boolean }> = ({ loadChat }) => {
                   if (currentChat.isGroupChat) {
                     setShowGroupModal(true);
                   } else {
-                    setOtherUser(getOtherUser(user._id, currentChat));
+                    setOtherUser(
+                      getOtherUser(storeInfo?._id as string, currentChat)
+                    );
                     setShowIndivModal(true);
                   }
                 }}
