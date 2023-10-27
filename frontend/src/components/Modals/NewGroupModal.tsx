@@ -83,7 +83,7 @@ export const NewGroupModal: FC<{
       setLoading(true);
       const data = await fetcher(
         `${API_URL.searchUser}?search=${search}`,
-        user.token
+        storeInfo?.token
       );
       if (data && data.length > 0) {
         setUsers(data);

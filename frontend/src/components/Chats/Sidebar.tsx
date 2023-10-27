@@ -1,4 +1,4 @@
-import { useChat, useLanguage, useUser } from "@/hooks/context";
+import { useChat, useLanguage } from "@/hooks/context";
 import { useUserInfo } from "@/hooks/user";
 import { API_URL } from "@/lib/consts";
 import { fetcher } from "@/lib/fetcher";
@@ -15,13 +15,12 @@ const Sidebar: FC<{
   setShow: Dispatch<SetStateAction<boolean>>;
   setLoadChat: Dispatch<SetStateAction<boolean>>;
 }> = ({ show, setShow, setLoadChat }) => {
-  const { val: user } = useUser();
   const { messages } = useLanguage();
   const { chats: chatStr } = useLanguage();
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
-  const [allowSearch, setAllowSearch] = useState(false)
+  const [allowSearch, setAllowSearch] = useState(false);
   const { setVal } = useChat();
   const { storeInfo } = useUserInfo();
   const accessChat = async (userId: string) => {
@@ -56,10 +55,10 @@ const Sidebar: FC<{
       setLoading(true);
       const data = await fetcher(
         `${API_URL.searchUser}?search=${search}`,
-        user.token
+        storeInfo?.token
       );
       if (data) {
-        setAllowSearch(true)
+        setAllowSearch(true);
         setUsers(data);
       }
     } catch (error) {
@@ -84,7 +83,7 @@ const Sidebar: FC<{
     if (!show) {
       setUsers([]);
       setSearch("");
-      setAllowSearch(false)
+      setAllowSearch(false);
     }
   }, [show]);
   return (
